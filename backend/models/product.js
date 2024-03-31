@@ -33,27 +33,27 @@ const ProductSchema = new mongoose.Schema(
         },
       },
     ],
-    rating: {
+    ratings: {
       type: Number,
       default: 0,
     },
-    reviews: [
-      {
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: [true, "User is required"],
-        },
-        rating: {
-          type: Number,
-          required: true,
-        },
-        comment: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
+    // reviews: [
+    //   {
+    //     user: {
+    //       type: mongoose.Schema.Types.ObjectId,
+    //       ref: "User",
+    //       required: [true, "User is required"],
+    //     },
+    //     rating: {
+    //       type: Number,
+    //       required: true,
+    //     },
+    //     comment: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //   },
+    // ],
     category: {
       type: String,
       enum: [
@@ -73,15 +73,15 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Product stock is required"],
     },
-    noOfReviews: {
+    numOfReviews: {
       type: Number,
       default: 0,
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: [true, "User is required"],
-    },
+    // user: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User",
+    //   required: [true, "User is required"],
+    // },
   },
   {
     timestamps: true,
