@@ -33,3 +33,8 @@ export const updateProduct = async (req, res) => {
   });
   res.status(200).json({ product });
 };
+
+export const deleteProduct = async (req, res) => {
+  await Product.findByIdAndDelete(req.params.id);
+  res.status(200).json({ msg: "product deleted Successfully" });
+};
