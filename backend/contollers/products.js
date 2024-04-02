@@ -13,6 +13,15 @@ export const createProduct = async (req, res) => {
     const product = await Product.create(req.body);
     res.status(201).json({ product });
   } catch (error) {
-    res.status(201).json({ msg: "failed" });
+    res.status(500).json({ msg: "failed" });
   }
+};
+
+export const getSingleproduct = async (req, res) => {
+  const id = req.params.id;
+  const product = await Product.findById(id);
+  if (!product) {
+    res.status(400).json({ msg: "failed" });
+  }
+  res.status(200).json({ product });
 };
