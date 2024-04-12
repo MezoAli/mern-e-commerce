@@ -11,7 +11,6 @@ dotenv.config({
 app.use(express.json());
 
 app.use("/api/v1", productRouter);
-
 app.use(errorMiddleware);
 
 const start = async () => {
