@@ -17,7 +17,7 @@ dotenv.config({
 app.use(express.json());
 
 app.use("/api/v1", productRouter);
-app.use("/auth", userRouter);
+app.use("/api/v1/auth", userRouter);
 
 app.use(errorMiddleware);
 let server;
