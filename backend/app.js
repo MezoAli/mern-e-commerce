@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import productRouter from "./routes/products.js";
+import userRouter from "./routes/user.js";
 import { connectDB } from "./config/connectDB.js";
 import errorMiddleware from "./middlewares/error.js";
 const app = express();
@@ -16,6 +17,7 @@ dotenv.config({
 app.use(express.json());
 
 app.use("/api/v1", productRouter);
+app.use("/auth", userRouter);
 
 app.use(errorMiddleware);
 let server;
