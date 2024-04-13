@@ -10,13 +10,12 @@ export const getAllProducts = catchAsyncErrors(async (req, res) => {
   });
 });
 
-export const createProduct = catchAsyncErrors(async (req, res) => {
-  try {
-    const product = await Product.create(req.body);
-    res.status(201).json({ product });
-  } catch (error) {
-    res.status(500).json({ msg: "failed" });
+export const createProduct = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.create(req.body);
+  if (!product) {
+    return next(new ErrorHandler("Failed to add product", 500));
   }
+  res.status(201).json({ product });
 });
 
 export const getSingleproduct = catchAsyncErrors(async (req, res, next) => {

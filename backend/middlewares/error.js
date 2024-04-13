@@ -4,20 +4,24 @@ export default (err, req, res, next) => {
     statusCode: err?.statusCode || 500,
   };
 
+  if (err.name === "CastError") {
+    error.message = `no item found with that ${err.value}`;
+    error.statusCode = 404;
+  }
+
+  if (err.name === "ValidationError") {
+    error.message = Object.values(err.errors)
+      .map((item) => item.message)
+      .join(" ,");
+    error.statusCode = 400;
+  }
+
   if (process.env.NODE_ENV === "PRODUCTION") {
-    if (err.name === "CastError") {
-      error.message = `no item found with that ${err.value}`;
-      error.statusCode = 404;
-    }
     return res.status(error.statusCode).json({
       message: error.message,
     });
   }
   if (process.env.NODE_ENV === "DEVELOPMENT") {
-    if (err.name === "CastError") {
-      error.message = `no item found with that ${err.value}`;
-      error.statusCode = 404;
-    }
     return res.status(error.statusCode).json({
       message: error.message,
       error: err,
