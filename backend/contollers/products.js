@@ -8,6 +8,9 @@ export const getAllProducts = catchAsyncErrors(async (req, res) => {
   const category = req.query.category;
   const seller = req.query.seller;
   const page = Number(req.query.page) || 1;
+  const priceGreaterThanOrEqual = Number(req.query.priceGTE);
+  const priceLowerThanOrEqual = Number(req.query.priceLTE);
+  const rating = Number(req.query.rating);
   const productsPerPage = 4;
   const skip = productsPerPage * (page - 1);
   if (keyword) {
@@ -26,6 +29,18 @@ export const getAllProducts = catchAsyncErrors(async (req, res) => {
     searchObject.seller = {
       $regex: seller,
       $options: "i",
+    };
+  }
+  if (priceGreaterThanOrEqual || priceLowerThanOrEqual) {
+    searchObject.price = {
+      $gte: priceGreaterThanOrEqual ? priceGreaterThanOrEqual : 0,
+      $lte: priceLowerThanOrEqual ? priceLowerThanOrEqual : 10000000,
+    };
+  }
+
+  if (rating) {
+    searchObject.ratings = {
+      $gte: rating,
     };
   }
   const allProducts = await Product.find(searchObject)
