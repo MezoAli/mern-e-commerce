@@ -3,7 +3,29 @@ import ErrorHandler from "../utils/errorHnadler.js";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
 
 export const getAllProducts = catchAsyncErrors(async (req, res) => {
-  const allProducts = await Product.find({});
+  const searchObject = {};
+  const keyword = req.query.keyword;
+  const category = req.query.category;
+  const seller = req.query.seller;
+  if (keyword) {
+    searchObject.name = {
+      $regex: keyword,
+      $options: "i",
+    };
+  }
+  if (category) {
+    searchObject.category = {
+      $regex: category,
+      $options: "i",
+    };
+  }
+  if (seller) {
+    searchObject.seller = {
+      $regex: seller,
+      $options: "i",
+    };
+  }
+  const allProducts = await Product.find(searchObject);
   res.status(200).json({
     noOfProducts: allProducts.length,
     products: allProducts,
