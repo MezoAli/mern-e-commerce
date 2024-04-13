@@ -11,7 +11,7 @@ export const getAllProducts = catchAsyncErrors(async (req, res) => {
   const priceGreaterThanOrEqual = Number(req.query.priceGTE);
   const priceLowerThanOrEqual = Number(req.query.priceLTE);
   const rating = Number(req.query.rating);
-  const productsPerPage = 4;
+  const productsPerPage = Number(req.query.productsPerPage) || 4;
   const skip = productsPerPage * (page - 1);
   if (keyword) {
     searchObject.name = {
