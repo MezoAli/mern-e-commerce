@@ -7,6 +7,9 @@ export const getAllProducts = catchAsyncErrors(async (req, res) => {
   const keyword = req.query.keyword;
   const category = req.query.category;
   const seller = req.query.seller;
+  const page = Number(req.query.page) || 1;
+  const productsPerPage = 4;
+  const skip = productsPerPage * (page - 1);
   if (keyword) {
     searchObject.name = {
       $regex: keyword,
@@ -25,9 +28,12 @@ export const getAllProducts = catchAsyncErrors(async (req, res) => {
       $options: "i",
     };
   }
-  const allProducts = await Product.find(searchObject);
+  const allProducts = await Product.find(searchObject)
+    .limit(productsPerPage)
+    .skip(skip);
   res.status(200).json({
     noOfProducts: allProducts.length,
+    currentPage: page,
     products: allProducts,
   });
 });
