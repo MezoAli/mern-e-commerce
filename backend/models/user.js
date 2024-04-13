@@ -18,7 +18,6 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, "please enter your name"],
       minlength: [6, "password should be at least 6 characters"],
-      select: false,
     },
     avatar: {
       public_id: String,
@@ -54,6 +53,11 @@ UserSchema.methods.generateToken = function () {
   );
 
   return token;
+};
+
+UserSchema.methods.comparePassword = async function (password) {
+  const result = bcrypt.compare(password, this.password);
+  return result;
 };
 
 export default mongoose.model("User", UserSchema);
