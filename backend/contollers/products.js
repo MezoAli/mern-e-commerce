@@ -54,6 +54,7 @@ export const getAllProducts = catchAsyncErrors(async (req, res) => {
 });
 
 export const createProduct = catchAsyncErrors(async (req, res, next) => {
+  req.body.user = req.user._id;
   const product = await Product.create(req.body);
   if (!product) {
     return next(new ErrorHandler("Failed to add product", 500));
