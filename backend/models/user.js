@@ -45,13 +45,9 @@ UserSchema.pre("save", async function (next) {
 });
 
 UserSchema.methods.generateToken = function () {
-  const token = jwt.sign(
-    { id: this._id, name: this.name },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: process.env.JWT_EXPIRES,
-    }
-  );
+  const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES,
+  });
 
   return token;
 };

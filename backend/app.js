@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import productRouter from "./routes/products.js";
 import userRouter from "./routes/user.js";
 import { connectDB } from "./config/connectDB.js";
+import cookieParser from "cookie-parser";
 import errorMiddleware from "./middlewares/error.js";
 const app = express();
 
@@ -15,6 +16,7 @@ dotenv.config({
   path: "backend/config/config.env",
 });
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/v1", productRouter);
 app.use("/api/v1/auth", userRouter);
