@@ -1,6 +1,7 @@
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
 import User from "../models/user.js";
 import ErrorHandler from "../utils/errorHnadler.js";
+import sendToken from "../utils/sendToken.js";
 
 export const registerUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.create(req.body);
@@ -9,10 +10,10 @@ export const registerUser = catchAsyncErrors(async (req, res, next) => {
 
 export const loginUser = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
-  if (!email | !password) {
+  if (!email || !password) {
     return next(new ErrorHandler("please provide email and password", 400));
   }
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
     return next(
@@ -26,7 +27,5 @@ export const loginUser = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("wrong password", 404));
   }
 
-  const token = user.generateToken();
-
-  res.status(200).json({ token });
+  sendToken(user, 200, res);
 });
