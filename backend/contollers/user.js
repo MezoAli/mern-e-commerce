@@ -5,6 +5,7 @@ import ErrorHandler from "../utils/errorHnadler.js";
 import sendToken from "../utils/sendToken.js";
 import { sendMail } from "../utils/sendEmail.js";
 import crypto from "crypto";
+import bcrypt from "bcryptjs";
 
 export const registerUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.create(req.body);
@@ -112,10 +113,35 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({ msg: "password has changed successfully" });
 });
 
-export const getCurrentUser = async (req, res, next) => {
+export const getCurrentUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   if (!user) {
     new ErrorHandler("please login first to access this resource", 404);
   }
   res.status(200).json({ user });
-};
+});
+
+export const updatePassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user._id).select("+password");
+
+  if (!user) {
+    return next(
+      new ErrorHandler("please login first to access this resource", 404)
+    );
+  }
+
+  const oldPassword = req.body.oldPassword;
+  const isMatchedPassword = await user.comparePassword(oldPassword);
+
+  if (!isMatchedPassword) {
+    return next(
+      new ErrorHandler("your old password is incorrect, please try again", 404)
+    );
+  }
+
+  user.password = req.body.newPassword;
+
+  await user.save({ validateBeforeSave: false });
+
+  res.status(200).json({ msg: "password updated successfully" });
+});

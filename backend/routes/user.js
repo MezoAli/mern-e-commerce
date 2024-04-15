@@ -6,6 +6,7 @@ import {
   forgetPassword,
   resetPassword,
   getCurrentUser,
+  updatePassword,
 } from "../contollers/user.js";
 import { isAuthenticated } from "../middlewares/isAuthenticated.js";
 
@@ -19,5 +20,6 @@ router.post("/password/forget", forgetPassword);
 router.put("/password/reset/:resetToken", resetPassword);
 
 router.get("/me", isAuthenticated, getCurrentUser);
+router.put("/password/update", isAuthenticated, updatePassword);
 
 export default router;
