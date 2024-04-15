@@ -8,6 +8,7 @@ export default (err, req, res, next) => {
     error.message = `${err.keyValue.email} is already in use`;
     error.statusCode = 400;
   }
+
   if (err.name === "CastError") {
     error.message = `no item found with that ${err.value}`;
     error.statusCode = 404;

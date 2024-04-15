@@ -111,3 +111,11 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({ msg: "password has changed successfully" });
 });
+
+export const getCurrentUser = async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    new ErrorHandler("please login first to access this resource", 404);
+  }
+  res.status(200).json({ user });
+};
