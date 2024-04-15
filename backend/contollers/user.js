@@ -4,6 +4,7 @@ import { getResetPasswordTemplate } from "../utils/emailTemplate.js";
 import ErrorHandler from "../utils/errorHnadler.js";
 import sendToken from "../utils/sendToken.js";
 import { sendMail } from "../utils/sendEmail.js";
+import crypto from "crypto";
 
 export const registerUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.create(req.body);
@@ -72,4 +73,41 @@ export const forgetPassword = catchAsyncErrors(async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
     return next(new ErrorHandler(error.message, 500));
   }
+});
+export const resetPassword = catchAsyncErrors(async (req, res, next) => {
+  const resetToken = req.params.resetToken;
+  const hashedResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  const user = await User.findOne({
+    resetPasswordToken: hashedResetToken,
+    resetPasswordExpires: { $gte: Date.now() },
+  }).select("+password");
+  if (!user) {
+    return next(
+      new ErrorHandler(
+        "email is not found or token has been expired, try again",
+        404
+      )
+    );
+  }
+
+  const password = req.body.password;
+  const confirmPassword = req.body.confirmPassword;
+
+  if (password !== confirmPassword) {
+    return next(
+      new ErrorHandler("password dose not match confirm password", 404)
+    );
+  }
+
+  user.password = password;
+
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+
+  await user.save({ validateBeforeSave: false });
+
+  res.status(200).json({ msg: "password has changed successfully" });
 });
