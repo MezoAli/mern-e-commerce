@@ -1,9 +1,9 @@
 import nodemailer from "nodemailer";
 
-export const sendMail = async (options) => {
+export const sendMail = async ({ email, html, subject }) => {
   const transport = nodemailer.createTransport({
     host: process.env.NODEMAILER_HOST,
-    port: process.env.NODEMAILER_PORT,
+    port: 2525,
     auth: {
       user: process.env.NODEMAILER_USER,
       pass: process.env.NODEMAILER_PASSWORD,
@@ -12,9 +12,10 @@ export const sendMail = async (options) => {
 
   const message = {
     from: `${process.env.NODEMAILER_FROM_NAME} <${process.env.NODEMAILER_FROM_EMAIL}`,
-    to: options.email,
-    subject: options.subject,
-    html: options.html,
+    to: email,
+    subject: subject,
+    html: html,
+    text: html,
   };
 
   await transport.sendMail(message);

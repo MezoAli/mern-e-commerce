@@ -1,3 +1,4 @@
+export const getResetPasswordTemplate = (username, resetUrl) => `
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -473,10 +474,10 @@
                   <tr>
                     <td class="content-cell">
                       <div class="f-fallback">
-                        <h1>Hi {USER_NAME},</h1>
+                        <h1>Hi ${username},</h1>
                         <p>
                           You recently requested to reset your password for your
-                          ShopIT account. Use the button below to reset it.
+                          Mezo-Shopping account. Use the button below to reset it.
                           <strong
                             >This password reset is only valid for the next 30
                             minutes.</strong
@@ -503,7 +504,7 @@
                                 <tr>
                                   <td align="center">
                                     <a
-                                      href="{url}"
+                                      href="${resetUrl}"
                                       class="f-fallback button button--green"
                                       target="_blank"
                                       >Reset your password</a
@@ -531,7 +532,7 @@
                                 browser.
                               </p>
                               <p class="f-fallback sub">
-                                <a href="{url}">{resetUrl}</a>
+                                <a href="${resetUrl}">${resetUrl}</a>
                               </p>
                             </td>
                           </tr>
@@ -569,3 +570,5 @@
     </table>
   </body>
 </html>
+
+`;

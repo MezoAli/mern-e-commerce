@@ -1,7 +1,9 @@
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
 import User from "../models/user.js";
+import { getResetPasswordTemplate } from "../utils/emailTemplate.js";
 import ErrorHandler from "../utils/errorHnadler.js";
 import sendToken from "../utils/sendToken.js";
+import { sendMail } from "../utils/sendEmail.js";
 
 export const registerUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.create(req.body);
@@ -40,4 +42,34 @@ export const logoutUser = catchAsyncErrors(async (req, res, next) => {
     .json({ msg: "log out successfully" });
 });
 
-export const resetPassword = catchAsyncErrors(async (req, res, next) => {});
+export const forgetPassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email }).select(
+    "+password"
+  );
+  if (!user) {
+    return next(
+      new ErrorHandler("email is not found, register to create account", 404)
+    );
+  }
+  const resetToken = user.resetPassword();
+
+  await user.save({ validateBeforeSave: false });
+
+  const resetUrl = `${process.env.FRONTEND_URL}/api/v1/password/reset/${resetToken}`;
+
+  const message = getResetPasswordTemplate(user?.name, resetUrl);
+
+  try {
+    await sendMail({
+      email: user.email,
+      html: message,
+      subject: "Mezo-Shopping Password Recovery",
+    });
+    res.status(200).json({ msg: "check your mail for reset password link" });
+  } catch (error) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
