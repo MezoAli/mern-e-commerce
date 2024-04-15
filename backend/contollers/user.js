@@ -145,3 +145,18 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({ msg: "password updated successfully" });
 });
+
+export const updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.user._id, req.body, {
+    new: true,
+    runValidators: false,
+  });
+
+  if (!user) {
+    return next(
+      new ErrorHandler("please login first to access this resource", 404)
+    );
+  }
+
+  res.status(201).json({ user });
+});
