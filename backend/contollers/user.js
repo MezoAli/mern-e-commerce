@@ -161,7 +161,30 @@ export const updateProfile = catchAsyncErrors(async (req, res, next) => {
   res.status(201).json({ user });
 });
 
-export const getAllUsers = async (req, res, next) => {
-  const users = await User.find();
+export const getAllUsers = catchAsyncErrors(async (req, res, next) => {
+  const email = req.query.email;
+  const name = req.query.name;
+  const role = req.query.role;
+  const id = req.query.id;
+  const searchOptions = {};
+  if (email) {
+    searchOptions.email = {
+      $regex: email,
+      $options: "i",
+    };
+  }
+  if (name) {
+    searchOptions.name = {
+      $regex: name,
+      $options: "i",
+    };
+  }
+  if (role) {
+    searchOptions.role = role;
+  }
+  if (id) {
+    searchOptions._id = id;
+  }
+  const users = await User.find(searchOptions);
   res.status(200).json({ noOfUsers: users.length, users });
-};
+});
