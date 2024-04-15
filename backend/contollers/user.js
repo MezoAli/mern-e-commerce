@@ -39,3 +39,5 @@ export const logoutUser = catchAsyncErrors(async (req, res, next) => {
     })
     .json({ msg: "log out successfully" });
 });
+
+export const resetPassword = catchAsyncErrors(async (req, res, next) => {});
