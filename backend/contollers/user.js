@@ -188,3 +188,16 @@ export const getAllUsers = catchAsyncErrors(async (req, res, next) => {
   const users = await User.find(searchOptions);
   res.status(200).json({ noOfUsers: users.length, users });
 });
+
+export const updateUser = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: false,
+  });
+
+  // if (!user) {
+  //   return next(new ErrorHandler("not found", 404));
+  // }
+
+  res.status(201).json({ user });
+});
