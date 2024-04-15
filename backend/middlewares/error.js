@@ -20,6 +20,16 @@ export default (err, req, res, next) => {
     error.statusCode = 400;
   }
 
+  if (err.name === "JsonWebTokenError") {
+    error.message = `json web token is invalid, try again`;
+    error.statusCode = 400;
+  }
+
+  if (err.name === "TokenExpiredError") {
+    error.message = `json web token is expired, try again`;
+    error.statusCode = 400;
+  }
+
   if (process.env.NODE_ENV === "PRODUCTION") {
     return res.status(error.statusCode).json({
       message: error.message,

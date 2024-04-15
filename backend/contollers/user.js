@@ -87,7 +87,7 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
   if (!user) {
     return next(
       new ErrorHandler(
-        "email is not found or token has been expired, try again",
+        "invalid token or token has been expired, try again",
         404
       )
     );
