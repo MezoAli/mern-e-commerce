@@ -160,3 +160,8 @@ export const updateProfile = catchAsyncErrors(async (req, res, next) => {
 
   res.status(201).json({ user });
 });
+
+export const getAllUsers = async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).json({ noOfUsers: users.length, users });
+};

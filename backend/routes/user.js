@@ -8,8 +8,10 @@ import {
   getCurrentUser,
   updatePassword,
   updateProfile,
+  getAllUsers,
 } from "../contollers/user.js";
 import { isAuthenticated } from "../middlewares/isAuthenticated.js";
+import { isAdmin } from "../middlewares/isAdmin.js";
 
 const router = express.Router();
 
@@ -23,5 +25,7 @@ router.put("/password/update", isAuthenticated, updatePassword);
 
 router.get("/me", isAuthenticated, getCurrentUser);
 router.put("/me", isAuthenticated, updateProfile);
+
+router.get("/admin/users", isAdmin, getAllUsers);
 
 export default router;

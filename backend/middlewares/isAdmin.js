@@ -21,7 +21,10 @@ export const isAdmin = catchAsyncErrors(async (req, res, next) => {
 
   if (user.role === "user") {
     return next(
-      new ErrorHandler("not authorized, only admin can add products", 401)
+      new ErrorHandler(
+        "not authorized, only admin can access this resource",
+        401
+      )
     );
   }
 
