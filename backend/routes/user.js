@@ -10,6 +10,7 @@ import {
   updateProfile,
   getAllUsers,
   updateUser,
+  deleteUser,
 } from "../contollers/user.js";
 import { isAuthenticated } from "../middlewares/isAuthenticated.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
@@ -29,5 +30,6 @@ router.put("/me", isAuthenticated, updateProfile);
 
 router.get("/admin/users", isAdmin, getAllUsers);
 router.put("/admin/users/:id", isAdmin, updateUser);
+router.delete("/admin/users/:id", isAdmin, deleteUser);
 
 export default router;

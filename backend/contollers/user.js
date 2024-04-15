@@ -195,9 +195,13 @@ export const updateUser = catchAsyncErrors(async (req, res, next) => {
     runValidators: false,
   });
 
-  // if (!user) {
-  //   return next(new ErrorHandler("not found", 404));
-  // }
-
   res.status(201).json({ user });
+});
+
+export const deleteUser = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+
+  res
+    .status(200)
+    .json({ msg: `user with email : ${user.email} deleted successfully` });
 });
