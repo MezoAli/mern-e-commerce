@@ -27,3 +27,9 @@ export const getAllOrdersForUser = catchAsyncErrors(async (req, res, next) => {
 
   res.status(201).json({ noOfOrders: orders.length, orders });
 });
+
+export const getAllOrdersForAdmin = catchAsyncErrors(async (req, res, next) => {
+  const orders = await Order.find();
+
+  res.status(201).json({ noOfOrders: orders.length, orders });
+});
