@@ -19,3 +19,11 @@ export const getSingleOrder = catchAsyncErrors(async (req, res, next) => {
   }
   res.status(201).json({ order });
 });
+
+export const getAllOrdersForUser = catchAsyncErrors(async (req, res, next) => {
+  const orders = await Order.find({
+    user: req.user._id,
+  });
+
+  res.status(201).json({ noOfOrders: orders.length, orders });
+});
