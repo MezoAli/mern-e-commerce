@@ -29,7 +29,13 @@ export const getAllOrdersForUser = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const getAllOrdersForAdmin = catchAsyncErrors(async (req, res, next) => {
-  const orders = await Order.find();
+  const searchOptions = {};
+  const id = req.query.id;
+  if (id) {
+    searchOptions._id = id;
+  }
+
+  const orders = await Order.find(searchOptions);
 
   res.status(201).json({ noOfOrders: orders.length, orders });
 });
