@@ -39,3 +39,15 @@ export const getAllOrdersForAdmin = catchAsyncErrors(async (req, res, next) => {
 
   res.status(201).json({ noOfOrders: orders.length, orders });
 });
+
+export const updateOrder = catchAsyncErrors(async (req, res, next) => {
+  const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+
+  if (!order) {
+    return next(new ErrorHandler(`no order found with that id: ${id}`));
+  }
+
+  res.status(201).json({ order });
+});
