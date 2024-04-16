@@ -5,6 +5,7 @@ import {
   getAllOrdersForUser,
   getSingleOrder,
   updateOrder,
+  deleteOrder,
 } from "../contollers/order.js";
 import { isAuthenticated } from "../middlewares/isAuthenticated.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
@@ -16,5 +17,6 @@ router.get("/orders/:id", isAuthenticated, getSingleOrder);
 router.get("/orders", isAuthenticated, getAllOrdersForUser);
 router.get("/admin/orders", isAdmin, getAllOrdersForAdmin);
 router.put("/admin/orders/:id", isAdmin, updateOrder);
+router.delete("/admin/orders/:id", isAdmin, deleteOrder);
 
 export default router;
