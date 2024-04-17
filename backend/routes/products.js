@@ -7,6 +7,7 @@ import {
   updateProduct,
   createReview,
   getAllReviewsForProduct,
+  deleteReview,
 } from "../contollers/products.js";
 import { isAuthenticated } from "../middlewares/isAuthenticated.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
@@ -20,5 +21,6 @@ router.delete("/admin/products/:id", isAuthenticated, isAdmin, deleteProduct);
 
 router.put("/products/reviews", isAuthenticated, createReview);
 router.get("/products/reviews/:productId", getAllReviewsForProduct);
+router.delete("/products/reviews", isAdmin, deleteReview);
 
 export default router;
