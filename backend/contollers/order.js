@@ -1,10 +1,24 @@
 import Order from "../models/order.js";
+import Product from "../models/product.js";
 import ErrorHandler from "../utils/errorHnadler.js";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
 
 export const createOrder = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user._id;
   const order = await Order.create(req.body);
+
+  order.orderItems.forEach(async (item) => {
+    const product = await Product.findById(item.product.toString());
+    if (!product) {
+      return next(
+        new ErrorHandler(`no product found with that id: ${id}`, 404)
+      );
+    }
+
+    product.stock = product.stock - item.quantity;
+
+    await product.save({ validateBeforeSave: false });
+  });
   res.status(201).json({ order });
 });
 
@@ -54,15 +68,21 @@ export const getAllOrdersForAdmin = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const updateOrder = catchAsyncErrors(async (req, res, next) => {
-  const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  const order = await Order.findById(req.params.id);
 
   if (!order) {
-    return next(new ErrorHandler(`no order found with that id: ${id}`));
+    return next(new ErrorHandler(`no order found with that id: ${id}`, 404));
   }
 
-  res.status(201).json({ order });
+  if (order.orderStatus === "Delivered") {
+    return next(new ErrorHandler(`the order is already delivered`, 400));
+  }
+
+  order.orderStatus = req.body.orderStatus;
+
+  await order.save({ validateBeforeSave: false });
+
+  res.status(201).json({ msg: "order status updated successfully" });
 });
 
 export const deleteOrder = catchAsyncErrors(async (req, res, next) => {
