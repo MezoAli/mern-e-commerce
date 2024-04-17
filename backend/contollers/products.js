@@ -122,3 +122,18 @@ export const createReview = catchAsyncErrors(async (req, res, next) => {
 
   res.status(201).json({ msg: "product review added Successfully" });
 });
+
+export const getAllReviewsForProduct = catchAsyncErrors(
+  async (req, res, next) => {
+    const product = await Product.findById(req.params.productId).populate(
+      "reviews.user",
+      "name email"
+    );
+    if (!product) {
+      return next(new ErrorHandler("Product not found", 404));
+    }
+    res
+      .status(200)
+      .json({ noOfReviews: product.reviews.length, reviews: product.reviews });
+  }
+);
