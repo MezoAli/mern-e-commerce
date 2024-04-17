@@ -37,23 +37,23 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    // reviews: [
-    //   {
-    //     user: {
-    //       type: mongoose.Schema.Types.ObjectId,
-    //       ref: "User",
-    //       required: [true, "User is required"],
-    //     },
-    //     rating: {
-    //       type: Number,
-    //       required: true,
-    //     },
-    //     comment: {
-    //       type: String,
-    //       required: true,
-    //     },
-    //   },
-    // ],
+    reviews: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: [true, "User is required"],
+        },
+        rating: {
+          type: Number,
+          required: true,
+        },
+        comment: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     category: {
       type: String,
       enum: [
