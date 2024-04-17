@@ -20,6 +20,19 @@ export const getSingleOrder = catchAsyncErrors(async (req, res, next) => {
   res.status(201).json({ order });
 });
 
+export const getSingleOrderForAdmin = catchAsyncErrors(
+  async (req, res, next) => {
+    const id = req.params.id;
+    const order = await Order.findOne({
+      _id: id,
+    });
+    if (!order) {
+      return next(new ErrorHandler(`no order found with that id: ${id}`));
+    }
+    res.status(201).json({ order });
+  }
+);
+
 export const getAllOrdersForUser = catchAsyncErrors(async (req, res, next) => {
   const orders = await Order.find({
     user: req.user._id,
