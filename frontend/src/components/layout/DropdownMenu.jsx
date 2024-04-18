@@ -15,6 +15,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 export function DropdownMenuDemo() {
   return (
@@ -26,18 +27,34 @@ export function DropdownMenuDemo() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuItem>
-          <Settings className="mr-2 h-4 w-4" />
-          <span>Dashboard</span>
+          <Link
+            to="/dashboard"
+            className="flex gap-1 text-lg justify-center items-center"
+          >
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Dashboard</span>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <BookAIcon className="mr-2 h-4 w-4" />
-          <span>Orders</span>
+          <Link
+            to="/orders"
+            className="flex gap-1 text-lg justify-center items-center"
+          >
+            <BookAIcon className="mr-2 h-4 w-4" />
+            <span>Orders</span>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <User className="mr-2 h-4 w-4" />
-          <span>Profile</span>
+          <Link
+            to="/profile"
+            className="flex gap-1 text-lg justify-center items-center"
+          >
+            {" "}
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem className="text-lg">
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
         </DropdownMenuItem>
