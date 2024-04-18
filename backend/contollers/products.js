@@ -153,8 +153,10 @@ export const deleteReview = catchAsyncErrors(async (req, res, next) => {
   product.numOfReviews = product.reviews.length;
 
   product.ratings =
-    product.reviews.reduce((acc, r) => r.rating + acc, 0) /
-    product.reviews.length;
+    product.reviews.length === 0
+      ? 0
+      : product.reviews.reduce((acc, r) => r.rating + acc, 0) /
+        product.reviews.length;
 
   await product.save({ validateBeforeSave: false });
 
