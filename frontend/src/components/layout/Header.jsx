@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenuDemo } from "./DropdownMenu";
 const Header = () => {
   return (
-    <div className="bg-black py-6 mb-4 text-white flex justify-between px-3">
+    <div className="bg-black py-6 mb-4 text-white flex justify-between px-10">
       <Link to="/" className="text-2xl font-bold">
         Mezo-Shopping
       </Link>
@@ -16,7 +16,7 @@ const Header = () => {
         <Input
           type="email"
           placeholder="Search Product ..."
-          className=" text-black"
+          className=" text-slate-500 text-lg placeholder:text-sm"
         />
         <Button>
           <Search />
@@ -31,7 +31,7 @@ const Header = () => {
         </div>
         <div className="flex gap-1 justify-center items-center">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src="../images/default_avatar.jpg" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <DropdownMenuDemo />
