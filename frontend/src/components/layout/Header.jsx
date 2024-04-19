@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenuDemo } from "./DropdownMenu";
 const Header = () => {
   return (
-    <div className="bg-black py-6 mb-4 text-white flex justify-between px-10">
+    <header className="bg-black py-6 mb-4 text-white flex justify-between px-10">
       <Link to="/" className="text-2xl font-bold">
         Mezo-Shopping
       </Link>
@@ -38,7 +38,7 @@ const Header = () => {
         </div>
         <Button variant="auth">Login</Button>
       </div>
-    </div>
+    </header>
   );
 };
 
