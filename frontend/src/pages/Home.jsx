@@ -1,7 +1,10 @@
 import Metadata from "@/components/layout/Metadata";
 import ProductCard from "@/components/product/ProductCard";
+import { useGetProductsQuery } from "@/store/api/productsApi";
 
 const Home = () => {
+  const { data } = useGetProductsQuery();
+  console.log(data);
   return (
     <>
       <Metadata title="Buy best products online" />
