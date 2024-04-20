@@ -1,9 +1,16 @@
 import { useGetProductsQuery } from "@/store/api/productsApi";
 import ProductCard from "./ProductCard";
+import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 const ProductsGrid = () => {
-  const { data, isLoading } = useGetProductsQuery();
-  console.log(data);
+  const { data, isLoading, error, isError } = useGetProductsQuery();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+  }, [isError]);
 
   if (isLoading) {
     return <p className="text-center text-3xl">Loading...</p>;
