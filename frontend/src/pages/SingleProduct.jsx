@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useGetSingleProductDetailsQuery } from "../store/api/productsApi";
 import SingleProductDetails from "@/components/product/SingleProduct";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const SingleProduct = () => {
   const { id } = useParams();

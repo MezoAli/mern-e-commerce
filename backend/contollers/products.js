@@ -50,6 +50,7 @@ export const getAllProducts = catchAsyncErrors(async (req, res) => {
   res.status(200).json({
     noOfProducts: allProducts.length,
     noOfAllProducts,
+    productsPerPage,
     page,
     products: allProducts,
   });

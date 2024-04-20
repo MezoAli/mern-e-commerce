@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
             starRatedColor="orange"
             numberOfStars={5}
             name="rating"
-            starDimension="23px"
+            starDimension="20px"
           />
           <p> ({product?.numOfReviews}) </p>
         </div>
