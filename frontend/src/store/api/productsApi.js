@@ -9,7 +9,13 @@ export const productsApi = createApi({
         url: "/products",
       }),
     }),
+    getSingleProductDetails: builder.query({
+      query: (id) => ({
+        url: `/products/${id}`,
+      }),
+    }),
   }),
 });
 
-export const { useGetProductsQuery } = productsApi;
+export const { useGetProductsQuery, useGetSingleProductDetailsQuery } =
+  productsApi;
