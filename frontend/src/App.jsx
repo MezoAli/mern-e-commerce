@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import Checkout from "./pages/Checkout";
+import SingleProduct from "./pages/SingleProduct";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <Profile /> },
       { path: "/orders", element: <Orders /> },
       { path: "/checkout", element: <Checkout /> },
+      { path: "/products/:id", element: <SingleProduct /> },
     ],
   },
 ]);

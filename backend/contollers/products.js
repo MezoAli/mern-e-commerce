@@ -43,11 +43,13 @@ export const getAllProducts = catchAsyncErrors(async (req, res) => {
       $gte: rating,
     };
   }
+  const noOfAllProducts = await Product.countDocuments();
   const allProducts = await Product.find(searchObject)
     .limit(productsPerPage)
     .skip(skip);
   res.status(200).json({
     noOfProducts: allProducts.length,
+    noOfAllProducts,
     page,
     products: allProducts,
   });

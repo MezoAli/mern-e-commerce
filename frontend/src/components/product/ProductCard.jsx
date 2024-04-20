@@ -7,27 +7,35 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
   return (
-    <Card>
+    <Card className="flex flex-col justify-between">
       <CardHeader>
-        <img src="../../images/default_product.png" />
-        <CardTitle>Product Name</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <StarRatings
-          rating={5}
-          starRatedColor="orange"
-          numberOfStars={5}
-          name="rating"
-          starDimension="25px"
+        <img
+          src={product?.images[0]?.url}
+          alt={product?.name}
+          className="h-[200px] mb-6"
         />
-        <p className="font-bold text-xl mt-4">$ 100</p>
+        <CardTitle>{product.name}</CardTitle>
+      </CardHeader>
+      <CardContent className="mt-10">
+        <div className="flex justify-between items-center gap-4">
+          <StarRatings
+            rating={product?.ratings}
+            starRatedColor="orange"
+            numberOfStars={5}
+            name="rating"
+            starDimension="23px"
+          />
+          <p> ({product?.numOfReviews}) </p>
+        </div>
+        <p className="font-bold text-xl mt-4">$ {product?.price}</p>
       </CardContent>
       <CardFooter>
         <Button variant="auth" className="w-full font-semibold text-lg">
-          View Details
+          <Link to={`/products/${product?._id}`}>View Details</Link>
         </Button>
       </CardFooter>
     </Card>
