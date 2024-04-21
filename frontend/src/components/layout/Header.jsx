@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Search } from "lucide-react";
@@ -7,6 +7,17 @@ import { Badge } from "../ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenuDemo } from "./DropdownMenu";
 const Header = () => {
+  const [keyword, setKeyword] = useState("");
+  // const navigate = useNavigate();
+  // const navigate = useNavigate();
+  // const handleChange = () => {
+  //   if (window.location.href.includes("?")) {
+  //     navigate(`/&keyword=${keyword}`);
+  //   } else {
+  //     navigate(`/?keyword=${keyword}`);
+  //   }
+  // };
+  const [searchParams, setSearchParams] = useSearchParams();
   return (
     <header className="bg-black py-6 mb-4 text-white flex justify-between px-10">
       <Link to="/" className="text-2xl font-bold">
@@ -17,8 +28,10 @@ const Header = () => {
           type="email"
           placeholder="Search Product ..."
           className=" text-slate-500 text-lg placeholder:text-sm"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
         />
-        <Button>
+        <Button onClick={() => setSearchParams({ keyword })}>
           <Search />
         </Button>
       </div>

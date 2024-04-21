@@ -9,6 +9,12 @@ export const productsApi = createApi({
         url: "/products",
         params: {
           page: params.page,
+          keyword: params.keyword,
+          seller: params.seller,
+          priceGTE: params.priceGTE,
+          rating: params.rating,
+          category: params.category,
+          priceLTE: params.priceLTE,
         },
       }),
     }),

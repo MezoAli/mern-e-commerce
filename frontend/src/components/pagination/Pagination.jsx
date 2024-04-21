@@ -9,11 +9,15 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-const PaginationComp = ({ productsPerPage, noOfAllProducts }) => {
+const PaginationComp = ({ productsPerPage, filteredProductsCount }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
   const numberOfPages = [];
-  for (let i = 1; i <= Math.ceil(noOfAllProducts / productsPerPage); i++) {
+  for (
+    let i = 1;
+    i <= Math.ceil(filteredProductsCount / productsPerPage);
+    i++
+  ) {
     numberOfPages.push(i);
   }
 
@@ -36,7 +40,9 @@ const PaginationComp = ({ productsPerPage, noOfAllProducts }) => {
               <PaginationItem key={index}>
                 <PaginationLink
                   isActive={searchParams.get("page") == index}
-                  className="cursor-pointer"
+                  className={`cursor-pointer ${
+                    searchParams.get("page") == index && "bg-orange-500"
+                  }`}
                   onClick={() => {
                     setCurrentPage(index);
                     setSearchParams({ page: index });
