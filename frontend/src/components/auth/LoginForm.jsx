@@ -1,16 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginUserMutation } from "@/store/api/authApi";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [login, { isError, isSuccess, error, data, isLoading }] =
+    useLoginUserMutation();
+  console.log(data);
   const submitHnadler = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    login({ email, password });
   };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success("Login Successfully");
+      navigate("/");
+    }
+  }, [isError, isSuccess]);
   return (
     <form
       className="flex flex-col gap-10 shadow-lg p-5"
@@ -41,8 +57,13 @@ const LoginForm = () => {
         <Button variant="link" className="text-slate-500  block ml-auto">
           <Link to="/forget">Forget Password ?</Link>
         </Button>
-        <Button className="w-[50%] mx-auto" variant="auth" type="submit">
-          Login
+        <Button
+          className="w-[50%] mx-auto"
+          variant="auth"
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Authenticating..." : "Login"}
         </Button>
         <Button variant="link" className="text-slate-500 block ml-auto">
           <Link to="/register">New User ?</Link>
