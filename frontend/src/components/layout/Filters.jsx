@@ -9,27 +9,30 @@ import { CATEGORIES } from "@/constants";
 import StarRatings from "react-star-ratings";
 
 const Filters = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [rating, setRating] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const initialCategory = searchParams.get("category") || "";
+  const initialRating = +searchParams.get("rating") || 4;
+  const [category, setCategory] = useState(initialCategory);
+  const [rating, setRating] = useState(initialRating);
+
+  useEffect(() => {
+    searchParams.has("priceGTE")
+      ? setMinPrice(searchParams.get("priceGTE"))
+      : "";
+    searchParams.has("priceLTE")
+      ? setMaxPrice(searchParams.get("priceLTE"))
+      : "";
+  }, []);
+
   const allSearchParams = getAllSearchParams(searchParams);
   const handlePriceFilter = () => {
-    if (minPrice) {
-      setSearchParams({ ...allSearchParams, priceGTE: minPrice });
-    }
-    if (maxPrice) {
-      setSearchParams({ ...allSearchParams, priceLTE: maxPrice });
-    }
-
-    if (minPrice && maxPrice) {
-      setSearchParams({
-        ...allSearchParams,
-        priceLTE: maxPrice,
-        priceGTE: minPrice,
-      });
-    }
+    setSearchParams({
+      ...allSearchParams,
+      priceLTE: maxPrice,
+      priceGTE: minPrice,
+    });
   };
 
   const handleCategoryFilter = () => {
@@ -43,6 +46,8 @@ const Filters = () => {
   const clearFilters = () => {
     setMaxPrice("");
     setMinPrice("");
+    setCategory("");
+    setRating("");
     setSearchParams({});
   };
 
@@ -75,7 +80,10 @@ const Filters = () => {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col items-start gap-2">
           <h3 className="text-xl font-semibold">Category</h3>
-          <RadioGroup defaultValue="All" onValueChange={(e) => setCategory(e)}>
+          <RadioGroup
+            defaultValue={category}
+            onValueChange={(e) => setCategory(e)}
+          >
             {CATEGORIES.map((item) => {
               return (
                 <div key={item} className="flex items-center space-x-2">
@@ -84,7 +92,7 @@ const Filters = () => {
                     id={item}
                     className="text-orange-500"
                   />
-                  <Label htmlFor="option-one">{item}</Label>
+                  <Label htmlFor={item}>{item}</Label>
                 </div>
               );
             })}
@@ -102,7 +110,7 @@ const Filters = () => {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col items-start gap-2">
           <h3 className="text-xl font-semibold">Rating</h3>
-          <RadioGroup defaultValue="1" onValueChange={(e) => setRating(e)}>
+          <RadioGroup defaultValue={rating} onValueChange={(e) => setRating(e)}>
             {[1, 2, 3, 4, 5].map((item) => {
               return (
                 <div key={item} className="flex items-center space-x-2">
@@ -111,7 +119,7 @@ const Filters = () => {
                     id={item}
                     className="text-orange-500"
                   />
-                  <Label htmlFor="option-one">
+                  <Label htmlFor={item}>
                     <StarRatings
                       rating={item}
                       starRatedColor="orange"
