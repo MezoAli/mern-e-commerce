@@ -8,10 +8,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { getAllSearchParams } from "@/lib/getAllSearchParams";
 
 const PaginationComp = ({ productsPerPage, filteredProductsCount }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
+  const allSearchParams = getAllSearchParams(searchParams);
   const numberOfPages = [];
   for (
     let i = 1;
@@ -30,7 +32,10 @@ const PaginationComp = ({ productsPerPage, filteredProductsCount }) => {
               <PaginationPrevious
                 onClick={() => {
                   setCurrentPage(currentPage - 1);
-                  setSearchParams({ page: currentPage - 1 });
+                  setSearchParams({
+                    ...allSearchParams,
+                    page: currentPage - 1,
+                  });
                 }}
               />
             </PaginationItem>
@@ -45,7 +50,7 @@ const PaginationComp = ({ productsPerPage, filteredProductsCount }) => {
                   }`}
                   onClick={() => {
                     setCurrentPage(index);
-                    setSearchParams({ page: index });
+                    setSearchParams({ ...allSearchParams, page: index });
                   }}
                 >
                   {index}
@@ -60,7 +65,10 @@ const PaginationComp = ({ productsPerPage, filteredProductsCount }) => {
               <PaginationNext
                 onClick={() => {
                   setCurrentPage(currentPage + 1);
-                  setSearchParams({ page: currentPage + 1 });
+                  setSearchParams({
+                    ...allSearchParams,
+                    page: currentPage + 1,
+                  });
                 }}
               />
             </PaginationItem>

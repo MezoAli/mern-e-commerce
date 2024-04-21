@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import PaginationComp from "../pagination/Pagination";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "../ui/button";
+import Filters from "../layout/Filters";
 
 const ProductsGrid = () => {
   const [searchParams] = useSearchParams();
@@ -24,9 +25,7 @@ const ProductsGrid = () => {
     priceGTE,
     priceLTE,
   };
-  console.log(priceGTE);
   const { data, isLoading, error, isError } = useGetProductsQuery(params);
-  console.log(data);
 
   useEffect(() => {
     if (isError) {
@@ -50,17 +49,21 @@ const ProductsGrid = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       <h2 className="text-3xl text-slate-400 font-bold my-6">
         {keyword.trim() || category || seller || priceGTE || priceLTE || rating
           ? `${data?.filteredProductsCount} Products found`
           : "Latest Products"}
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        {data?.products?.map((product) => {
-          return <ProductCard product={product} key={product._id} />;
-        })}
+      <div className="flex gap-4">
+        <Filters className="col-span-1 md:col-span-1 lg:col-span-1" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          {data?.products?.map((product) => {
+            return <ProductCard product={product} key={product._id} />;
+          })}
+        </div>
       </div>
+
       {data?.filteredProductsCount > data?.productsPerPage && (
         <PaginationComp
           productsPerPage={data?.productsPerPage}
