@@ -44,7 +44,9 @@ const Header = () => {
           </Avatar>
           <DropdownMenuDemo />
         </div>
-        <Button variant="auth">Login</Button>
+        <Button variant="auth">
+          <Link to="/login">Login</Link>
+        </Button>
       </div>
     </header>
   );
