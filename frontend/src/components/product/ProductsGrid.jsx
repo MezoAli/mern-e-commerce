@@ -11,7 +11,7 @@ const ProductsGrid = () => {
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get("page")) || 1;
   const keyword = searchParams.get("keyword") || "";
-  const category = searchParams.get("category") || "";
+  let category = searchParams.get("category") || "";
   const seller = searchParams.get("seller") || "";
   const priceGTE = Number(searchParams.get("priceGTE")) || 0;
   const priceLTE = Number(searchParams.get("priceLTE")) || 100000;
