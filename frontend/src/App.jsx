@@ -8,6 +8,7 @@ import Checkout from "./pages/Checkout";
 import SingleProduct from "./pages/SingleProduct";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: "/checkout", element: <Checkout /> },
       { path: "/products/:id", element: <SingleProduct /> },
       { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
     ],
   },
 ]);

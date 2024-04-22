@@ -5,11 +5,10 @@ import ErrorHandler from "../utils/errorHnadler.js";
 import sendToken from "../utils/sendToken.js";
 import { sendMail } from "../utils/sendEmail.js";
 import crypto from "crypto";
-import bcrypt from "bcryptjs";
 
 export const registerUser = catchAsyncErrors(async (req, res, next) => {
-  const user = await User.create(req.body);
-  res.status(201).json({ user, msg: "user created successfully" });
+  await User.create(req.body);
+  res.status(201).json({ message: "user created successfully" });
 });
 
 export const loginUser = catchAsyncErrors(async (req, res, next) => {

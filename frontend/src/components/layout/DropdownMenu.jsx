@@ -17,12 +17,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 
-export function DropdownMenuDemo() {
+export function DropdownMenuDemo({ user }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button>
-          User <ArrowBigDown />
+          {user?.name || "User"} <ArrowBigDown />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">

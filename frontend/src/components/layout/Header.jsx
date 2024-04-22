@@ -7,10 +7,13 @@ import { Badge } from "../ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenuDemo } from "./DropdownMenu";
 import { getAllSearchParams } from "@/lib/getAllSearchParams";
+import { useGetUserProfileQuery } from "@/store/api/userApi";
 const Header = () => {
   const [keyword, setKeyword] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const allSearchParams = getAllSearchParams(searchParams);
+  const { data } = useGetUserProfileQuery();
+  console.log(data);
   return (
     <header className="bg-black py-6 mb-4 text-white flex justify-between px-10">
       <Link to="/" className="text-2xl font-bold">
@@ -42,11 +45,16 @@ const Header = () => {
             <AvatarImage src="../images/default_avatar.jpg" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <DropdownMenuDemo />
+          <DropdownMenuDemo user={data?.user} />
         </div>
-        <Button variant="auth">
-          <Link to="/login">Login</Link>
-        </Button>
+
+        {data?.user ? (
+          <Button variant="destructive">Log Out</Button>
+        ) : (
+          <Button variant="auth">
+            <Link to="/login">Login</Link>
+          </Button>
+        )}
       </div>
     </header>
   );
