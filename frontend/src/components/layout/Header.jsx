@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -7,13 +7,24 @@ import { Badge } from "../ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenuDemo } from "./DropdownMenu";
 import { getAllSearchParams } from "@/lib/getAllSearchParams";
-import { useGetUserProfileQuery } from "@/store/api/userApi";
+import {
+  useGetUserProfileQuery,
+  useLogoutUserMutation,
+} from "@/store/api/userApi";
+import toast from "react-hot-toast";
 const Header = () => {
   const [keyword, setKeyword] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const allSearchParams = getAllSearchParams(searchParams);
   const { data } = useGetUserProfileQuery();
-  console.log(data);
+  const [logout, { isSuccess, isLoading, data: logoutData }] =
+    useLogoutUserMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(logoutData?.msg);
+    }
+  }, [isSuccess]);
   return (
     <header className="bg-black py-6 mb-4 text-white flex justify-between px-10">
       <Link to="/" className="text-2xl font-bold">
@@ -49,7 +60,9 @@ const Header = () => {
         </div>
 
         {data?.user ? (
-          <Button variant="destructive">Log Out</Button>
+          <Button variant="destructive" onClick={() => logout()}>
+            {isLoading ? "please Wait" : "Log Out"}
+          </Button>
         ) : (
           <Button variant="auth">
             <Link to="/login">Login</Link>
