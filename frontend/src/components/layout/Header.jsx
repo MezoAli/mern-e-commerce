@@ -7,16 +7,13 @@ import { Badge } from "../ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenuDemo } from "./DropdownMenu";
 import { getAllSearchParams } from "@/lib/getAllSearchParams";
-import {
-  useGetUserProfileQuery,
-  useLogoutUserMutation,
-} from "@/store/api/userApi";
+import { useLogoutUserMutation } from "@/store/api/authApi";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 const Header = () => {
   const [keyword, setKeyword] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const allSearchParams = getAllSearchParams(searchParams);
-  const { data } = useGetUserProfileQuery();
   const [logout, { isSuccess, isLoading, data: logoutData }] =
     useLogoutUserMutation();
 
@@ -25,6 +22,7 @@ const Header = () => {
       toast.success(logoutData?.msg);
     }
   }, [isSuccess]);
+  const { user, isAuthenticated } = useSelector((state) => state.userSlice);
   return (
     <header className="bg-black py-6 mb-4 text-white flex justify-between px-10">
       <Link to="/" className="text-2xl font-bold">
@@ -56,10 +54,10 @@ const Header = () => {
             <AvatarImage src="../images/default_avatar.jpg" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <DropdownMenuDemo user={data?.user} />
+          <DropdownMenuDemo user={user} />
         </div>
 
-        {data?.user ? (
+        {isAuthenticated ? (
           <Button variant="destructive" onClick={() => logout()}>
             {isLoading ? "please Wait" : "Log Out"}
           </Button>

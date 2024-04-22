@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { setIsAuthenticated, setUser } from "../slices/userSlice";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -8,14 +9,18 @@ export const userApi = createApi({
       query: () => ({
         url: "/me",
       }),
-    }),
-    logoutUser: builder.mutation({
-      query: () => ({
-        url: "/logout",
-        method: "POST",
-      }),
+      //   transformResponse: (result) => result.user,
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setUser(data.user));
+          dispatch(setIsAuthenticated(true));
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
   }),
 });
 
-export const { useGetUserProfileQuery, useLogoutUserMutation } = userApi;
+export const { useGetUserProfileQuery } = userApi;

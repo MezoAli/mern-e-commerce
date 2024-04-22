@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   return (
-    <Card className="flex flex-col justify-between">
+    <Card className="flex flex-col justify-around">
       <CardHeader>
         <img
           src={product?.images[0]?.url}
@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
             starRatedColor="orange"
             numberOfStars={5}
             name="rating"
-            starDimension="20px"
+            starDimension="15px"
           />
           <p> ({product?.numOfReviews}) </p>
         </div>
