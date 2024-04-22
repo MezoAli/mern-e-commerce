@@ -6,9 +6,8 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/api/v1/auth" }),
   endpoints: (builder) => ({
     getUserProfile: builder.query({
-      query: () => ({
-        url: "/me",
-      }),
+      query: () => "/me",
+
       //   transformResponse: (result) => result.user,
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {

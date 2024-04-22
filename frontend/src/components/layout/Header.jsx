@@ -2,20 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Search } from "lucide-react";
+import { LogOut, Search } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenuDemo } from "./DropdownMenu";
 import { getAllSearchParams } from "@/lib/getAllSearchParams";
-import { useLogoutUserMutation } from "@/store/api/authApi";
+import { useLazyLogoutUserQuery } from "@/store/api/authApi";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { useGetUserProfileQuery } from "@/store/api/userApi";
 const Header = () => {
   const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const allSearchParams = getAllSearchParams(searchParams);
   const [logout, { isSuccess, isLoading, data: logoutData }] =
-    useLogoutUserMutation();
+    useLazyLogoutUserQuery();
+
+  const { data } = useGetUserProfileQuery();
 
   useEffect(() => {
     if (isSuccess) {
@@ -49,16 +53,25 @@ const Header = () => {
             0
           </Badge>
         </div>
-        <div className="flex gap-1 justify-center items-center">
-          <Avatar>
-            <AvatarImage src="../images/default_avatar.jpg" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <DropdownMenuDemo user={user} />
-        </div>
+        {user && (
+          <div className="flex gap-1 justify-center items-center">
+            <Avatar>
+              <AvatarImage src="../images/default_avatar.jpg" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <DropdownMenuDemo user={user} />
+          </div>
+        )}
 
         {isAuthenticated ? (
-          <Button variant="destructive" onClick={() => logout()}>
+          <Button
+            variant="destructive"
+            onClick={() => {
+              logout();
+              navigate(0);
+            }}
+          >
+            <LogOut className="mr-2 h-4 w-4" />
             {isLoading ? "please Wait" : "Log Out"}
           </Button>
         ) : (

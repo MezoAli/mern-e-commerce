@@ -28,16 +28,13 @@ export const authApi = createApi({
         body,
       }),
     }),
-    logoutUser: builder.mutation({
-      query: () => ({
-        url: "/logout",
-        method: "POST",
-      }),
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        await queryFulfilled;
-        dispatch(setUser(null));
-        dispatch(setIsAuthenticated(false));
-      },
+    logoutUser: builder.query({
+      query: () => "/logout",
+      //   async onQueryStarted(args, { dispatch, queryFulfilled }) {
+      //     await queryFulfilled;
+      //     dispatch(setUser(null));
+      //     dispatch(setIsAuthenticated(false));
+      //   },
     }),
   }),
 });
@@ -45,5 +42,5 @@ export const authApi = createApi({
 export const {
   useLoginUserMutation,
   useRegisterUserMutation,
-  useLogoutUserMutation,
+  useLazyLogoutUserQuery,
 } = authApi;

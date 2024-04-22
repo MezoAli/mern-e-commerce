@@ -22,7 +22,7 @@ export function DropdownMenuDemo({ user }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button>
-          {user?.name || "User"} <ArrowBigDown />
+          {user?.name} <ArrowBigDown />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -44,19 +44,16 @@ export function DropdownMenuDemo({ user }) {
             <span>Orders</span>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          className={`bg-orange-500 hover:bg-orange-500 flex justify-start`}
+        >
           <Link
             to="/profile"
-            className="flex gap-1 text-lg justify-center items-center"
+            className={`flex gap-1 text-lg justify-center items-center w-full ml-0`}
           >
-            {" "}
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="text-lg cursor-pointer">
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "@/store/api/authApi";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   const [register, { isError, isSuccess, error, data, isLoading }] =
     useRegisterUserMutation();
+  const { isAuthenticated } = useSelector((state) => state.userSlice);
   console.log(data);
   const submitHnadler = async (e) => {
     e.preventDefault();
@@ -20,6 +22,9 @@ const RegisterForm = () => {
   };
 
   useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
     if (isError) {
       toast.error(error?.data?.message);
     }
@@ -27,7 +32,7 @@ const RegisterForm = () => {
       toast.success(data?.message);
       navigate("/");
     }
-  }, [isError, isSuccess]);
+  }, [isError, isSuccess, isAuthenticated]);
   return (
     <form
       className="flex flex-col gap-10 shadow-lg p-5"

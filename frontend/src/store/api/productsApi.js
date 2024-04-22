@@ -17,6 +17,7 @@ export const productsApi = createApi({
           priceLTE: params.priceLTE,
         },
       }),
+      // keepUnusedDataFor: 30,
     }),
     getSingleProductDetails: builder.query({
       query: (id) => ({
