@@ -11,6 +11,7 @@ import {
   getAllUsers,
   updateUser,
   deleteUser,
+  uploadFileController,
 } from "../contollers/user.js";
 import { isAuthenticated } from "../middlewares/isAuthenticated.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
@@ -27,6 +28,7 @@ router.put("/password/update", isAuthenticated, updatePassword);
 
 router.get("/me", isAuthenticated, getCurrentUser);
 router.put("/me", isAuthenticated, updateProfile);
+router.put("/me/upload_avatar", isAuthenticated, uploadFileController);
 
 router.get("/admin/users", isAdmin, getAllUsers);
 router.put("/admin/users/:id", isAdmin, updateUser);

@@ -5,6 +5,7 @@ import ErrorHandler from "../utils/errorHnadler.js";
 import sendToken from "../utils/sendToken.js";
 import { sendMail } from "../utils/sendEmail.js";
 import crypto from "crypto";
+import { uploadFile } from "../utils/cloudinary.js";
 
 export const registerUser = catchAsyncErrors(async (req, res, next) => {
   await User.create(req.body);
@@ -210,4 +211,16 @@ export const deleteUser = catchAsyncErrors(async (req, res, next) => {
   res
     .status(200)
     .json({ msg: `user with email : ${user.email} deleted successfully` });
+});
+
+export const uploadFileController = catchAsyncErrors(async (req, res, next) => {
+  let user = await User.findById(req.user._id);
+  const result = await uploadFile(req.body.file, "mezo-shopping/avatars");
+
+  user.avatar.public_id = result.public_id;
+  user.avatar.url = result.url;
+
+  await user.save({ validateBeforeSave: false });
+
+  res.status(201).json({ message: `image uploaded successfully` });
 });
