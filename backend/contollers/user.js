@@ -146,6 +146,13 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const { name, email } = req.body;
+  if (name.trim() === "") {
+    return next(new ErrorHandler("please enter a name", 400));
+  }
+  if (name.trim().length < 3) {
+    return next(new ErrorHandler("name cannot be less than 3 characters", 400));
+  }
   const user = await User.findByIdAndUpdate(req.user._id, req.body, {
     new: true,
     runValidators: false,

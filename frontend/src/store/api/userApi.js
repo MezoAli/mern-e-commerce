@@ -4,9 +4,11 @@ import { setIsAuthenticated, setUser } from "../slices/userSlice";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api/v1/auth" }),
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     getUserProfile: builder.query({
       query: () => "/me",
+      providesTags: ["User"],
 
       //   transformResponse: (result) => result.user,
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
@@ -19,7 +21,15 @@ export const userApi = createApi({
         }
       },
     }),
+    updateUserProfile: builder.mutation({
+      query: (body) => ({
+        url: "/me",
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetUserProfileQuery } = userApi;
+export const { useGetUserProfileQuery, useUpdateUserProfileMutation } = userApi;
