@@ -2,7 +2,12 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const ProtectedLayout = ({ children }) => {
-  const { isAuthenticated } = useSelector((state) => state.userSlice);
+  const { isAuthenticated, loading } = useSelector((state) => state.userSlice);
+  if (loading) {
+    return (
+      <p className="text-center text-3xl my-10 font-semibold">Loading...</p>
+    );
+  }
   if (isAuthenticated) {
     return children;
   }
