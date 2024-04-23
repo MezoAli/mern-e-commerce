@@ -30,11 +30,11 @@ export const authApi = createApi({
     }),
     logoutUser: builder.query({
       query: () => "/logout",
-      //   async onQueryStarted(args, { dispatch, queryFulfilled }) {
-      //     await queryFulfilled;
-      //     dispatch(setUser(null));
-      //     dispatch(setIsAuthenticated(false));
-      //   },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        dispatch(setUser(null));
+        dispatch(setIsAuthenticated(false));
+      },
     }),
   }),
 });

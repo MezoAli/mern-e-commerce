@@ -12,6 +12,7 @@ import UpdateProfile from "./pages/UpdateProfile";
 import UpdatePassword from "./pages/UpdatePassword";
 import UploadAvatar from "./pages/UploadAvatar";
 import UserProfileLayout from "./components/layout/UserProfileLayout";
+import ProtectedLayout from "./components/auth/ProtectedLayout";
 
 const router = createBrowserRouter([
   {
@@ -21,10 +22,17 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       {
         path: "/profile",
-        element: <UserProfileLayout />,
+        element: (
+          <ProtectedLayout>
+            <UserProfileLayout />
+          </ProtectedLayout>
+        ),
         children: [
           { path: "/profile", element: <Profile /> },
-          { path: "/profile/update_profile", element: <UpdateProfile /> },
+          {
+            path: "/profile/update_profile",
+            element: <UpdateProfile />,
+          },
           { path: "/profile/update_password", element: <UpdatePassword /> },
           { path: "/profile/upload_avatar", element: <UploadAvatar /> },
         ],

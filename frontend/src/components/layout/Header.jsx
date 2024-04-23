@@ -68,7 +68,7 @@ const Header = () => {
             variant="destructive"
             onClick={() => {
               logout();
-              navigate(0);
+              // navigate(0);
             }}
           >
             <LogOut className="mr-2 h-4 w-4" />
