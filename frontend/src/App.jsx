@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import MainLayout from "./pages/MainLayout";
-import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import Checkout from "./pages/Checkout";
@@ -9,6 +8,10 @@ import SingleProduct from "./pages/SingleProduct";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import UpdateProfile from "./pages/UpdateProfile";
+import UpdatePassword from "./pages/UpdatePassword";
+import UploadAvatar from "./pages/UploadAvatar";
+import UserProfileLayout from "./components/layout/UserProfileLayout";
 
 const router = createBrowserRouter([
   {
@@ -16,8 +19,17 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/dashboard", element: <Dashboard /> },
-      { path: "/profile", element: <Profile /> },
+      {
+        path: "/profile",
+        element: <UserProfileLayout />,
+        children: [
+          { path: "/profile", element: <Profile /> },
+          { path: "/profile/update_profile", element: <UpdateProfile /> },
+          { path: "/profile/update_password", element: <UpdatePassword /> },
+          { path: "/profile/upload_avatar", element: <UploadAvatar /> },
+        ],
+      },
+      ,
       { path: "/orders", element: <Orders /> },
       { path: "/checkout", element: <Checkout /> },
       { path: "/products/:id", element: <SingleProduct /> },
