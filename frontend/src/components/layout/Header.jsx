@@ -56,7 +56,13 @@ const Header = () => {
         {user && (
           <div className="flex gap-1 justify-center items-center">
             <Avatar>
-              <AvatarImage src="../images/default_avatar.jpg" />
+              <AvatarImage
+                src={`${
+                  user?.avatar
+                    ? user?.avatar?.url
+                    : "../images/default_avatar.jpg"
+                }`}
+              />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <DropdownMenuDemo user={user} />
