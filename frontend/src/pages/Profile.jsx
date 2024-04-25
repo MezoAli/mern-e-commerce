@@ -5,7 +5,10 @@ const Profile = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
-        <img src={user?.avatar?.url || "../images/default_avatar.jpg"} />
+        <img
+          className="rounded-full"
+          src={user?.avatar?.url || "../images/default_avatar.jpg"}
+        />
       </div>
       <div className="flex flex-col justify-center items-center">
         <div>

@@ -110,7 +110,7 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
 
-  res.status(200).json({ msg: "password has changed successfully" });
+  res.status(200).json({ message: "password has changed successfully" });
 });
 
 export const getCurrentUser = catchAsyncErrors(async (req, res, next) => {
