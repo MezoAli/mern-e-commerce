@@ -13,13 +13,14 @@ import { useSelector } from "react-redux";
 import { useGetUserProfileQuery } from "@/store/api/userApi";
 const Header = () => {
   const [keyword, setKeyword] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const allSearchParams = getAllSearchParams(searchParams);
   const [logout, { isSuccess, isLoading, data: logoutData }] =
     useLazyLogoutUserQuery();
 
   const { data } = useGetUserProfileQuery();
+  console.log(data);
 
   useEffect(() => {
     if (isSuccess) {

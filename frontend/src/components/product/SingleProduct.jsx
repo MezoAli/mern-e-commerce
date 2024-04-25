@@ -7,8 +7,23 @@ import {
 } from "@/components/ui/carousel";
 import StarRatings from "react-star-ratings";
 import { Button } from "../ui/button";
+import { useState } from "react";
 
 const SingleProductDetails = ({ product }) => {
+  const [quantity, setQuantity] = useState(1);
+
+  const decreseQuantity = () => {
+    setQuantity((prev) => {
+      if (prev === 1) return prev;
+      return prev - 1;
+    });
+  };
+  const increaseQuantity = () => {
+    setQuantity((prev) => {
+      if (prev === product?.stock) return prev;
+      return prev + 1;
+    });
+  };
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-[80px] max-w-4xl mx-auto">
       <div className="col-span-2 mt-20">
@@ -45,10 +60,19 @@ const SingleProductDetails = ({ product }) => {
         </div>
         <p className="text-2xl font-bold">$ {product?.price}</p>
         <div className="flex justify-start items-center gap-5">
-          <Button>-</Button>
-          <p>1</p>
-          <Button>+</Button>
-          <Button variant="auth">Add To Cart</Button>
+          <Button onClick={decreseQuantity} disabled={quantity === 1}>
+            -
+          </Button>
+          <p>{quantity}</p>
+          <Button
+            onClick={increaseQuantity}
+            disabled={quantity === product?.stock}
+          >
+            +
+          </Button>
+          <Button variant="auth" disabled={product?.stock === 0}>
+            Add To Cart
+          </Button>
         </div>
         <div className="flex justify-start items-center gap-4 text-xl font-bold">
           <p>Status : </p>
