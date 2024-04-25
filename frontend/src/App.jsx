@@ -13,6 +13,8 @@ import UpdatePassword from "./pages/UpdatePassword";
 import UploadAvatar from "./pages/UploadAvatar";
 import UserProfileLayout from "./components/layout/UserProfileLayout";
 import ProtectedLayout from "./components/auth/ProtectedLayout";
+import ForgetPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +45,8 @@ const router = createBrowserRouter([
       { path: "/products/:id", element: <SingleProduct /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
+      { path: "/password/forget", element: <ForgetPassword /> },
+      { path: "/password/reset/:resetToken", element: <ResetPassword /> },
     ],
   },
 ]);

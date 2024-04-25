@@ -11,7 +11,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [login, { isError, isSuccess, error, data, isLoading }] =
+  const [login, { isError, isSuccess, error, isLoading }] =
     useLoginUserMutation();
 
   const { isAuthenticated } = useSelector((state) => state.userSlice);
@@ -64,7 +64,7 @@ const LoginForm = () => {
           className="text-slate-500  block ml-auto"
           type="button"
         >
-          <Link to="/forget">Forget Password ?</Link>
+          <Link to="/password/forget">Forget Password ?</Link>
         </Button>
         <Button
           className="w-[50%] mx-auto"
