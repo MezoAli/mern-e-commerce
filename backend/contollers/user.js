@@ -139,11 +139,17 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
+  if (req.body.newPassword.length < 5) {
+    return next(
+      new ErrorHandler("password should be atleast 6 charcters", 400)
+    );
+  }
+
   user.password = req.body.newPassword;
 
   await user.save({ validateBeforeSave: false });
 
-  res.status(200).json({ msg: "password updated successfully" });
+  res.status(200).json({ message: "password updated successfully" });
 });
 
 export const updateProfile = catchAsyncErrors(async (req, res, next) => {

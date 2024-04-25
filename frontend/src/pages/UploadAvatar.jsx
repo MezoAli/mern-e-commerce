@@ -28,7 +28,6 @@ const UploadAvatar = () => {
 
   const [upload, { error, isError, isLoading, isSuccess, data }] =
     useUploadAvatarMutation();
-  console.log(error);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

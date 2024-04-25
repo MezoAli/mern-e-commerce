@@ -34,7 +34,7 @@ export const authApi = createApi({
         await queryFulfilled;
         dispatch(setUser(null));
         dispatch(setIsAuthenticated(false));
-        dispatch(setLoading(true));
+        dispatch(setLoading(false));
       },
     }),
   }),
