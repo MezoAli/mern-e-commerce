@@ -20,7 +20,6 @@ const Header = () => {
     useLazyLogoutUserQuery();
 
   const { data } = useGetUserProfileQuery();
-  console.log(data);
 
   useEffect(() => {
     if (isSuccess) {

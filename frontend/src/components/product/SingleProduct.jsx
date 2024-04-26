@@ -8,9 +8,12 @@ import {
 import StarRatings from "react-star-ratings";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setCartItem } from "@/store/slices/cartSlice";
 
 const SingleProductDetails = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
   const decreseQuantity = () => {
     setQuantity((prev) => {
@@ -23,6 +26,19 @@ const SingleProductDetails = ({ product }) => {
       if (prev === product?.stock) return prev;
       return prev + 1;
     });
+  };
+
+  const handleAtToCart = () => {
+    const cartItem = {
+      product: product?._id,
+      name: product?.name,
+      image: product?.images[0].url,
+      price: product?.price,
+      stock: product?.stock,
+      quantity,
+    };
+
+    dispatch(setCartItem(cartItem));
   };
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-[80px] max-w-4xl mx-auto">
@@ -70,7 +86,11 @@ const SingleProductDetails = ({ product }) => {
           >
             +
           </Button>
-          <Button variant="auth" disabled={product?.stock === 0}>
+          <Button
+            variant="auth"
+            disabled={product?.stock === 0}
+            onClick={handleAtToCart}
+          >
             Add To Cart
           </Button>
         </div>
