@@ -10,6 +10,7 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCartItem } from "@/store/slices/cartSlice";
+import toast from "react-hot-toast";
 
 const SingleProductDetails = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
@@ -39,6 +40,8 @@ const SingleProductDetails = ({ product }) => {
     };
 
     dispatch(setCartItem(cartItem));
+
+    toast.success("Item added to cart");
   };
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-[80px] max-w-4xl mx-auto">

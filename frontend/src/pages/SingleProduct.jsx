@@ -3,6 +3,7 @@ import { useGetSingleProductDetailsQuery } from "../store/api/productsApi";
 import SingleProductDetails from "@/components/product/SingleProduct";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import Metadata from "@/components/layout/Metadata";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -18,7 +19,15 @@ const SingleProduct = () => {
     return <p className="text-center text-3xl">Loading...</p>;
   }
 
-  return <SingleProductDetails product={data?.product} />;
+  return (
+    <>
+      <Metadata
+        title={data?.product?.name}
+        description={data?.product?.description}
+      />
+      <SingleProductDetails product={data?.product} />
+    </>
+  );
 };
 
 export default SingleProduct;

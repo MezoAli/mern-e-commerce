@@ -15,6 +15,7 @@ import UserProfileLayout from "./components/layout/UserProfileLayout";
 import ProtectedLayout from "./components/auth/ProtectedLayout";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Cart from "./pages/Cart";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       ,
       { path: "/orders", element: <Orders /> },
       { path: "/checkout", element: <Checkout /> },
+      { path: "/cart", element: <Cart /> },
       { path: "/products/:id", element: <SingleProduct /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
