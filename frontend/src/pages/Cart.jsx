@@ -1,6 +1,6 @@
 import Metadata from "@/components/layout/Metadata";
 import { Button } from "@/components/ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -11,14 +11,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  increaseProductCartQuantity,
+  decreaseProductCartQuantity,
+  removeItemFromCart,
+} from "@/store/slices/cartSlice";
 
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cartSlice);
+  const dispatch = useDispatch();
   console.log(cartItems);
-  const cartTotal = cartItems.reduce(
-    (acc, item) => item.price * item.quantity + acc,
-    0
-  );
+  const cartTotal = cartItems
+    .reduce((acc, item) => item?.price * item?.quantity + acc, 0)
+    .toFixed(2);
   console.log(cartTotal);
   return (
     <div className="max-w-5xl mx-auto ">
@@ -47,23 +52,48 @@ const Cart = () => {
                   <TableHead>Price</TableHead>
                   <TableHead className="text-center">Quantity</TableHead>
                   <TableHead>Total</TableHead>
+                  <TableHead className="text-center">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {cartItems?.map((item) => (
                   <TableRow key={item?.product}>
                     <TableCell>
-                      <img alt={item?.name} src={item.image} />
+                      <img alt={item?.name} src={item?.image} />
                     </TableCell>
                     <TableCell className="font-bold">{item?.name}</TableCell>
                     <TableCell className="font-bold">{item?.price}</TableCell>
-                    <TableCell className="flex justify-center items-center gap-3 pt-[26px]">
-                      <Button>+</Button>
+                    <TableCell className="flex justify-center items-center gap-3 pt-[65px]">
+                      <Button
+                        disabled={item?.quantity === item?.stock}
+                        onClick={() =>
+                          dispatch(increaseProductCartQuantity(item?.product))
+                        }
+                      >
+                        +
+                      </Button>
                       <p>{item?.quantity}</p>
-                      <Button>-</Button>
+                      <Button
+                        disabled={item?.quantity === 1}
+                        onClick={() =>
+                          dispatch(decreaseProductCartQuantity(item?.product))
+                        }
+                      >
+                        -
+                      </Button>
                     </TableCell>
                     <TableCell className="font-bold">
-                      $ {item?.quantity * item?.price}
+                      $ {(item?.quantity * item?.price).toFixed(2)}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="destructive"
+                        onClick={() =>
+                          dispatch(removeItemFromCart(item?.product))
+                        }
+                      >
+                        Remove
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -82,7 +112,7 @@ const Cart = () => {
               </div>
               <hr />
               <Button variant="auth" className="w-full">
-                CheckOut
+                <Link to="/checkout">CheckOut</Link>
               </Button>
             </div>
           </div>
