@@ -17,6 +17,7 @@ import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/Cart";
 import ShippingInfo from "./pages/ShippingInfo";
+import ConfirmOrder from "./pages/ConfirmOrder";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       { path: "/checkout", element: <Checkout /> },
       { path: "/cart", element: <Cart /> },
       { path: "/shipping", element: <ShippingInfo /> },
+      { path: "/confirm_order", element: <ConfirmOrder /> },
       { path: "/products/:id", element: <SingleProduct /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },

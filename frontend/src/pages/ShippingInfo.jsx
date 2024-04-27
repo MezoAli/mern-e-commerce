@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { countries } from "countries-list";
 import { useDispatch, useSelector } from "react-redux";
 import { setShippingInfo } from "@/store/slices/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const ShippingInfo = () => {
   const { shippingInfo } = useSelector((state) => state.cartSlice);
@@ -14,12 +15,14 @@ const ShippingInfo = () => {
   const [zipCode, setZipCode] = useState(shippingInfo.zipCode || "");
   const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo || "");
   const [country, setCountry] = useState(shippingInfo.country || "");
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
   const handleSubmitShippingInfo = (e) => {
     e.preventDefault();
     dispatch(setShippingInfo({ address, city, country, zipCode, phoneNo }));
+    navigate("/confirm_order");
   };
 
   return (

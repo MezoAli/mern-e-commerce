@@ -11,8 +11,11 @@ const CartSummary = ({ cartItems, tax }) => {
     (acc, item) => item?.quantity + acc,
     0
   );
+
+  const taxAmount =
+    cartTotal < 1000 ? Math.ceil(cartTotal * 0.14).toFixed(2) : 0;
   return (
-    <div className="shadow-lg p-5 flex flex-col gap-5 items-center justify-center md:ml-6 md:w-[300px]">
+    <div className="shadow-lg p-5 flex flex-col gap-3 items-center justify-center md:ml-6 md:w-[300px]">
       <h3 className="text-2xl font-bold">Order Summary</h3>
       <hr />
       <div className="flex justify-between gap-8 items-center font-semibold">
@@ -28,7 +31,16 @@ const CartSummary = ({ cartItems, tax }) => {
         <>
           <div className="flex justify-between gap-8 items-center font-semibold">
             <p>Taxes : </p>
-            <span>{Math.ceil(cartTotal * 0.1).toFixed(2)} $</span>
+            <span>{taxAmount} $</span>
+          </div>
+          <hr />
+        </>
+      )}
+      {tax && (
+        <>
+          <div className="flex justify-between gap-8 items-center font-semibold">
+            <p className="text-xl font-bold">Total : </p>
+            <span>{Number(cartTotal) + Number(taxAmount)} $</span>
           </div>
           <hr />
         </>
