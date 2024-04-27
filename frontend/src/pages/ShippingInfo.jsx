@@ -4,17 +4,22 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { countries } from "countries-list";
+import { useDispatch, useSelector } from "react-redux";
+import { setShippingInfo } from "@/store/slices/cartSlice";
 
 const ShippingInfo = () => {
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
+  const { shippingInfo } = useSelector((state) => state.cartSlice);
+  const [address, setAddress] = useState(shippingInfo.address || "");
+  const [city, setCity] = useState(shippingInfo.city || "");
+  const [zipCode, setZipCode] = useState(shippingInfo.zipCode || "");
+  const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo || "");
+  const [country, setCountry] = useState(shippingInfo.country || "");
+
+  const dispatch = useDispatch();
 
   const handleSubmitShippingInfo = (e) => {
     e.preventDefault();
-    console.log(address, city, country, zipCode, phoneNo);
+    dispatch(setShippingInfo({ address, city, country, zipCode, phoneNo }));
   };
 
   return (
@@ -70,7 +75,7 @@ const ShippingInfo = () => {
       <div>
         <label
           htmlFor="countries"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Select Country
         </label>
@@ -78,7 +83,7 @@ const ShippingInfo = () => {
           value={country}
           onChange={(e) => setCountry(e.target.value)}
           id="countries"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           {Object.values(countries).map((c) => {
             return (
@@ -91,7 +96,7 @@ const ShippingInfo = () => {
       </div>
 
       <Button className="w-[50%] mx-auto" variant="auth" type="submit">
-        Checkout
+        Confirm Order
       </Button>
     </form>
   );
