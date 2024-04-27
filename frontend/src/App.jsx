@@ -16,6 +16,7 @@ import ProtectedLayout from "./components/auth/ProtectedLayout";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/Cart";
+import ShippingInfo from "./pages/ShippingInfo";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
       { path: "/orders", element: <Orders /> },
       { path: "/checkout", element: <Checkout /> },
       { path: "/cart", element: <Cart /> },
+      { path: "/shipping", element: <ShippingInfo /> },
       { path: "/products/:id", element: <SingleProduct /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },

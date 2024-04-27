@@ -20,11 +20,15 @@ import {
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cartSlice);
   const dispatch = useDispatch();
-  console.log(cartItems);
   const cartTotal = cartItems
     .reduce((acc, item) => item?.price * item?.quantity + acc, 0)
     .toFixed(2);
-  console.log(cartTotal);
+
+  const cartTotalItems = cartItems.reduce(
+    (acc, item) => item?.quantity + acc,
+    0
+  );
+
   return (
     <div className="max-w-5xl mx-auto ">
       <Metadata title="Your Cart" />
@@ -61,9 +65,15 @@ const Cart = () => {
                     <TableCell>
                       <img alt={item?.name} src={item?.image} />
                     </TableCell>
-                    <TableCell className="font-bold">{item?.name}</TableCell>
+                    <TableCell className="font-bold">
+                      <Button variant="link">
+                        <Link to={`/products/${item?.product}`}>
+                          {item?.name}
+                        </Link>
+                      </Button>
+                    </TableCell>
                     <TableCell className="font-bold">{item?.price}</TableCell>
-                    <TableCell className="flex justify-center items-center gap-3 pt-[65px]">
+                    <TableCell className="flex justify-center items-center gap-3 pt-[30px]">
                       <Button
                         disabled={item?.quantity === item?.stock}
                         onClick={() =>
@@ -103,8 +113,8 @@ const Cart = () => {
               <h3 className="text-2xl font-bold">Order Summary</h3>
               <hr />
               <div className="flex justify-between gap-8 items-center font-semibold">
-                <p>SubTotal : </p>
-                <span>{cartItems?.length} Units</span>
+                <p>Units : </p>
+                <span>{cartTotalItems} Units</span>
               </div>
               <div className="flex justify-between gap-8 items-center font-semibold">
                 <p>Est Total : </p>
@@ -112,7 +122,7 @@ const Cart = () => {
               </div>
               <hr />
               <Button variant="auth" className="w-full">
-                <Link to="/checkout">CheckOut</Link>
+                <Link to="/shipping">CheckOut</Link>
               </Button>
             </div>
           </div>
