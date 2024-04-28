@@ -1,19 +1,11 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import { calculateCartAmounts } from "@/lib/calculateCartAmounts";
 
 const CartSummary = ({ cartItems, tax }) => {
-  const cartTotal = cartItems
-    .reduce((acc, item) => item?.price * item?.quantity + acc, 0)
-    .toFixed(2);
-
-  const cartTotalItems = cartItems.reduce(
-    (acc, item) => item?.quantity + acc,
-    0
-  );
-
-  const taxAmount =
-    cartTotal < 1000 ? Math.ceil(cartTotal * 0.14).toFixed(2) : 0;
+  const { cartTotal, cartTotalItems, shippingAmount, taxAmount } =
+    calculateCartAmounts(cartItems);
   return (
     <div className="shadow-lg p-5 flex flex-col gap-3 items-center justify-center md:ml-6 md:w-[300px]">
       <h3 className="text-2xl font-bold">Order Summary</h3>
@@ -30,6 +22,15 @@ const CartSummary = ({ cartItems, tax }) => {
       {tax && (
         <>
           <div className="flex justify-between gap-8 items-center font-semibold">
+            <p>Shipping : </p>
+            <span>{shippingAmount} $</span>
+          </div>
+          <hr />
+        </>
+      )}
+      {tax && (
+        <>
+          <div className="flex justify-between gap-8 items-center font-semibold">
             <p>Taxes : </p>
             <span>{taxAmount} $</span>
           </div>
@@ -40,13 +41,17 @@ const CartSummary = ({ cartItems, tax }) => {
         <>
           <div className="flex justify-between gap-8 items-center font-semibold">
             <p className="text-xl font-bold">Total : </p>
-            <span>{Number(cartTotal) + Number(taxAmount)} $</span>
+            <span>
+              {Number(cartTotal) + Number(taxAmount) + Number(shippingAmount)} $
+            </span>
           </div>
           <hr />
         </>
       )}
       <Button variant="auth" className="w-full">
-        <Link to="/shipping">{tax ? "Proceed To Payment" : "CheckOut"}</Link>
+        <Link to={`${tax ? "/payment_method" : "/shipping"}`}>
+          {tax ? "Proceed To Payment" : "CheckOut"}
+        </Link>
       </Button>
     </div>
   );

@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import MainLayout from "./pages/MainLayout";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
-import Checkout from "./pages/Checkout";
+import PaymentMethod from "./pages/PaymentMethod";
 import SingleProduct from "./pages/SingleProduct";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       },
       ,
       { path: "/orders", element: <Orders /> },
-      { path: "/checkout", element: <Checkout /> },
+      { path: "/payment_method", element: <PaymentMethod /> },
       { path: "/cart", element: <Cart /> },
       { path: "/shipping", element: <ShippingInfo /> },
       { path: "/confirm_order", element: <ConfirmOrder /> },

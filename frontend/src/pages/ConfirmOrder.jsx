@@ -33,29 +33,21 @@ const Cart = () => {
               <p className="text-slate-400 font-semibold">{user?.name}</p>
             </div>
             <div className=" my-4 ml-4 flex start items-center gap-6">
-              <h3 className="text-xl font-semibold">Address :</h3>
-              <address className="text-slate-400 font-semibold">
-                {shippingInfo?.address}
-              </address>
-            </div>
-            <div className=" my-4 ml-4 flex start items-center gap-6">
               <h3 className="text-xl font-semibold">Phone Number :</h3>
               <p className="text-slate-400 font-semibold">
                 {shippingInfo?.phoneNo}
               </p>
             </div>
             <div className=" my-4 ml-4 flex start items-center gap-6">
-              <h3 className="text-xl font-semibold">City :</h3>
-              <p className="text-slate-400 font-semibold">
-                {shippingInfo?.city}
-              </p>
-            </div>
-            <div className=" my-4 ml-4 flex start items-center gap-6">
-              <h3 className="text-xl font-semibold">Country :</h3>
-              <p className="text-slate-400 font-semibold">
+              <h3 className="text-xl font-semibold">Address :</h3>
+              <address className="text-slate-400 font-semibold">
+                {shippingInfo?.address} , {shippingInfo?.city} ,{" "}
                 {shippingInfo?.country}
-              </p>
+              </address>
             </div>
+            <p className="text-center my-5 font-bold text-green-600 text-2xl">
+              Shipping will be free for orders greater than 500 $
+            </p>
           </div>
           <div className="flex flex-col md:flex-row">
             <CartItems cartItems={cartItems} tax />
