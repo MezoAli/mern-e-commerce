@@ -65,7 +65,7 @@ export const createProduct = catchAsyncErrors(async (req, res, next) => {
 
 export const getSingleproduct = catchAsyncErrors(async (req, res, next) => {
   const id = req.params.id;
-  const product = await Product.findById(id);
+  const product = await Product.findById(id).populate("reviews.user");
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
   }

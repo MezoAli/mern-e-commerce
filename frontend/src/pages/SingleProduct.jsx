@@ -4,6 +4,7 @@ import SingleProductDetails from "@/components/product/SingleProduct";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import Metadata from "@/components/layout/Metadata";
+import ReviewsGrid from "@/components/product/ReviewsGrid";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -26,6 +27,13 @@ const SingleProduct = () => {
         description={data?.product?.description}
       />
       <SingleProductDetails product={data?.product} />
+      {data?.product?.reviews.length > 0 ? (
+        <ReviewsGrid reviews={data?.product?.reviews} />
+      ) : (
+        <p className="text-center my-4 text-2xl text-red-500 capitalize">
+          there is no reviews for that product{" "}
+        </p>
+      )}
     </>
   );
 };
