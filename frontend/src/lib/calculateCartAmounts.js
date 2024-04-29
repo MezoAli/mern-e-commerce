@@ -10,7 +10,7 @@ export const calculateCartAmounts = (cartItems) => {
 
   const taxAmount = +Math.ceil(cartTotal * 0.14).toFixed(2);
 
-  const shippingAmount = cartTotal >= 500 ? 0 : 10;
+  const shippingAmount = cartTotal >= 500 ? 0 : 25;
 
   const totalAmount =
     Number(cartTotal) + Number(taxAmount) + Number(shippingAmount);

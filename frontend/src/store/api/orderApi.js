@@ -11,7 +11,15 @@ export const orderApi = createApi({
         body,
       }),
     }),
+    createStripeOrder: builder.mutation({
+      query: (body) => ({
+        url: "/payment/stripe-checkout",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useCreateOrderMutation } = orderApi;
+export const { useCreateOrderMutation, useCreateStripeOrderMutation } =
+  orderApi;

@@ -2,7 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { calculateCartAmounts } from "@/lib/calculateCartAmounts";
-import { useCreateOrderMutation } from "@/store/api/orderApi";
+import {
+  useCreateOrderMutation,
+  useCreateStripeOrderMutation,
+} from "@/store/api/orderApi";
 import { removeTotalCartItems } from "@/store/slices/cartSlice";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -18,23 +21,34 @@ const PaymentMethod = () => {
   const [create, { isError, isSuccess, error, isLoading }] =
     useCreateOrderMutation();
 
+  const [
+    createStripeOrder,
+    {
+      isError: stripeIsError,
+      isSuccess: stripeIsSuccess,
+      error: stripeError,
+      isLoading: stripeIsLoading,
+      data,
+    },
+  ] = useCreateStripeOrderMutation();
+
   const submitHandler = async (e) => {
     e.preventDefault();
+    const data = {
+      shippingInfo,
+      orderItems: cartItems,
+      paymentMethod: payment,
+      itemsPrice: cartTotal,
+      taxAmount,
+      shippingAmount,
+      totalAmount,
+    };
     if (payment === "COD") {
-      const data = {
-        shippingInfo,
-        orderItems: cartItems,
-        paymentMethod: payment,
-        itemsPrice: cartTotal,
-        taxAmount,
-        shippingAmount,
-        totalAmount,
-      };
       create(data);
       dispatch(removeTotalCartItems());
     }
     if (payment === "Card") {
-      alert("card");
+      createStripeOrder(data);
     }
   };
 
@@ -44,9 +58,18 @@ const PaymentMethod = () => {
     }
     if (isSuccess) {
       toast.success("Order Created Successfully");
-      // navigate("/");
+      navigate("/orders");
     }
   }, [isError, isSuccess]);
+
+  useEffect(() => {
+    if (stripeIsError) {
+      toast.error(stripeError?.data?.message);
+    }
+    if (stripeIsSuccess) {
+      window.location.href = data?.url;
+    }
+  }, [stripeIsError, stripeIsSuccess]);
   return (
     <form
       className="flex flex-col gap-10 shadow-lg p-5 max-w-xl mx-auto"
@@ -80,7 +103,7 @@ const PaymentMethod = () => {
         </div>
       </RadioGroup>
       <Button variant="auth" disabled={isLoading}>
-        {isLoading ? "Creating..." : "Continue"}
+        {isLoading || stripeIsLoading ? "Creating..." : "Continue"}
       </Button>
     </form>
   );
