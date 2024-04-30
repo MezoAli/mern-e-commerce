@@ -43,7 +43,14 @@ const router = createBrowserRouter([
         ],
       },
       ,
-      { path: "/orders", element: <Orders /> },
+      {
+        path: "/orders",
+        element: (
+          <ProtectedLayout>
+            <Orders />
+          </ProtectedLayout>
+        ),
+      },
       { path: "/payment_method", element: <PaymentMethod /> },
       { path: "/cart", element: <Cart /> },
       { path: "/shipping", element: <ShippingInfo /> },

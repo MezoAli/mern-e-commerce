@@ -18,8 +18,16 @@ export const orderApi = createApi({
         body,
       }),
     }),
+    getAllOrdersForUser: builder.query({
+      query: () => ({
+        url: "/orders",
+      }),
+    }),
   }),
 });
 
-export const { useCreateOrderMutation, useCreateStripeOrderMutation } =
-  orderApi;
+export const {
+  useCreateOrderMutation,
+  useCreateStripeOrderMutation,
+  useGetAllOrdersForUserQuery,
+} = orderApi;

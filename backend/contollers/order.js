@@ -52,7 +52,7 @@ export const getAllOrdersForUser = catchAsyncErrors(async (req, res, next) => {
     user: req.user._id,
   });
 
-  res.status(201).json({ noOfOrders: orders.length, orders });
+  res.status(201).json({ orders });
 });
 
 export const getAllOrdersForAdmin = catchAsyncErrors(async (req, res, next) => {
