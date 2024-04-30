@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import Metadata from "@/components/layout/Metadata";
 import ReviewsGrid from "@/components/product/ReviewsGrid";
+import ReviewForm from "@/components/product/ReviewForm";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -27,6 +28,7 @@ const SingleProduct = () => {
         description={data?.product?.description}
       />
       <SingleProductDetails product={data?.product} />
+      <ReviewForm productId={data?.product?._id} />
       {data?.product?.reviews.length > 0 ? (
         <ReviewsGrid reviews={data?.product?.reviews} />
       ) : (

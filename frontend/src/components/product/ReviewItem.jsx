@@ -23,9 +23,9 @@ const ReviewItem = ({ review }) => {
           name="rating"
           starDimension="25px"
         />
-        <p className="text-slate-700">{review?.comment}</p>
+        <p className="text-slate-700 whitespace-pre-line">{review?.comment}</p>
       </div>
-      <hr />
+      <hr className="my-2" />
     </div>
   );
 };
