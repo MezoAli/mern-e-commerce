@@ -27,7 +27,11 @@ const OrdersTable = ({ orders }) => {
       <TableBody>
         {orders?.map((item) => (
           <TableRow key={item?._id}>
-            <TableCell className="font-bold">{item?._id}</TableCell>
+            <TableCell className="font-bold">
+              <Button variant="link">
+                <Link to={`/orders/${item?._id}`}>{item?._id}</Link>
+              </Button>
+            </TableCell>
             <TableCell>$ {item?.totalAmount}</TableCell>
             <TableCell>{item?.orderStatus}</TableCell>
             <TableCell className="font-bold">

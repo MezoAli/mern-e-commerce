@@ -23,6 +23,11 @@ export const orderApi = createApi({
         url: "/orders",
       }),
     }),
+    getSingleOrder: builder.query({
+      query: (id) => ({
+        url: `/orders/${id}`,
+      }),
+    }),
   }),
 });
 
@@ -30,4 +35,5 @@ export const {
   useCreateOrderMutation,
   useCreateStripeOrderMutation,
   useGetAllOrdersForUserQuery,
+  useGetSingleOrderQuery,
 } = orderApi;

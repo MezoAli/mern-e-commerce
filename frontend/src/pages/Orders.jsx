@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const Orders = () => {
   const { data } = useGetAllOrdersForUserQuery();
-  console.log(data);
   return (
     <>
       <Metadata title="your orders" />

@@ -18,6 +18,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Cart from "./pages/Cart";
 import ShippingInfo from "./pages/ShippingInfo";
 import ConfirmOrder from "./pages/ConfirmOrder";
+import SingleOrder from "./pages/SingleOrder";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedLayout>
             <Orders />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: "/orders/:orderId",
+        element: (
+          <ProtectedLayout>
+            <SingleOrder />
           </ProtectedLayout>
         ),
       },
