@@ -2,10 +2,22 @@ import Metadata from "@/components/layout/Metadata";
 import OrdersTable from "@/components/order/OrdersTable";
 import { Button } from "@/components/ui/button";
 import { useGetAllOrdersForUserQuery } from "@/store/api/orderApi";
-import { Link } from "react-router-dom";
+import { removeTotalCartItems } from "@/store/slices/cartSlice";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useSearchParams } from "react-router-dom";
 
 const Orders = () => {
   const { data } = useGetAllOrdersForUserQuery();
+  const [searchParams] = useSearchParams();
+  const isPaymentSuccessful = searchParams.get("payment_success");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isPaymentSuccessful) {
+      dispatch(removeTotalCartItems());
+    }
+  }, [isPaymentSuccessful]);
   return (
     <>
       <Metadata title="your orders" />

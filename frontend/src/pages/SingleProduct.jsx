@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetSingleProductDetailsQuery } from "../store/api/productsApi";
 import SingleProductDetails from "@/components/product/SingleProduct";
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ import Metadata from "@/components/layout/Metadata";
 import ReviewsGrid from "@/components/product/ReviewsGrid";
 import ReviewForm from "@/components/product/ReviewForm";
 import { useGetAllOrdersForUserQuery } from "@/store/api/orderApi";
+import { Button } from "@/components/ui/button";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -27,9 +28,22 @@ const SingleProduct = () => {
   const userOrdersItems = ordersData?.orders?.flatMap((order) => {
     return order.orderItems;
   });
-  const findProductInUserOrders = userOrdersItems.find(
+  const findProductInUserOrders = userOrdersItems?.find(
     (item) => item?.product === data?.product?._id
   );
+
+  if (isError) {
+    return (
+      <div className="flex justify-center flex-col items-center">
+        <p className="text-center text-4xl font-bold my-8 text-red-700">
+          {error?.data?.message}
+        </p>
+        <Button variant="auth">
+          <Link to="/">Back to Products</Link>
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <>

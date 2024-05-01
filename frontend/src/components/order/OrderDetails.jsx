@@ -97,7 +97,14 @@ const OrderDetails = ({ order }) => {
                 className="flex w-full justify-between gap-4 items-center"
               >
                 <img alt={item?.name} src={item?.image} className="w-24 h-24" />
-                <h2 className="text-slate-500 text-sm">{item?.name}</h2>
+                <Button variant="link">
+                  <Link
+                    className="text-slate-500 text-sm"
+                    to={`/products/${item?.product}`}
+                  >
+                    {item?.name}
+                  </Link>
+                </Button>
                 <p>$ {item?.price}</p>
                 <p>{item?.quantity}</p>
               </div>

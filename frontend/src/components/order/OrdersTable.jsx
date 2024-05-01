@@ -12,7 +12,6 @@ import {
 import { Printer, EyeIcon } from "lucide-react";
 
 const OrdersTable = ({ orders }) => {
-  console.log(orders);
   return (
     <Table className="w-full col-span-1 md:col-span-3">
       <TableCaption>A list of your orders</TableCaption>
@@ -46,12 +45,12 @@ const OrdersTable = ({ orders }) => {
             <TableCell>{item?.orderStatus}</TableCell>
             <TableCell className="font-bold flex justify-center items-center gap-2">
               <Button variant="outline" className="text-green-500">
-                <Link to={`/orders/invoice/${item?._id}`}>
+                <Link to={`/orders/${item?._id}`}>
                   <EyeIcon />
                 </Link>
               </Button>
               <Button variant="outline" className="text-blue-500">
-                <Link to={`/products/${item?.product}`}>
+                <Link to={`/orders/invoice/${item?._id}`}>
                   <Printer />
                 </Link>
               </Button>
