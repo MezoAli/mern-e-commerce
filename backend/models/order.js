@@ -63,7 +63,11 @@ const OrderSchema = new mongoose.Schema(
     },
     paymentInfo: {
       id: String,
-      status: String,
+      status: {
+        type: String,
+        enum: ["paid", "not-paid"],
+        default: "not-paid",
+      },
     },
     itemsPrice: {
       type: Number,

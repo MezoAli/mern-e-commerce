@@ -27,7 +27,7 @@ export const getSingleOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findOne({
     _id: id,
     user: req.user._id,
-  });
+  }).populate("user");
   if (!order) {
     return next(new ErrorHandler(`no order found with that id: ${id}`));
   }

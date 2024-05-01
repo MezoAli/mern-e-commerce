@@ -9,10 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { useDispatch } from "react-redux";
+import { Printer, EyeIcon } from "lucide-react";
 
 const OrdersTable = ({ orders }) => {
-  const dispatch = useDispatch();
+  console.log(orders);
   return (
     <Table className="w-full col-span-1 md:col-span-3">
       <TableCaption>A list of your orders</TableCaption>
@@ -20,6 +20,7 @@ const OrdersTable = ({ orders }) => {
         <TableRow>
           <TableHead className="w-[130px]">Order Id</TableHead>
           <TableHead>Amount Paid</TableHead>
+          <TableHead>Payment Status</TableHead>
           <TableHead>Order Status</TableHead>
           <TableHead className="text-center">Actions</TableHead>
         </TableRow>
@@ -33,10 +34,26 @@ const OrdersTable = ({ orders }) => {
               </Button>
             </TableCell>
             <TableCell>$ {item?.totalAmount}</TableCell>
+            <TableCell
+              className={`${
+                item?.paymentInfo?.status === "paid"
+                  ? "text-green-500 font-bold"
+                  : "text-red-500 font-bold"
+              }`}
+            >
+              $ {item?.paymentInfo?.status}
+            </TableCell>
             <TableCell>{item?.orderStatus}</TableCell>
-            <TableCell className="font-bold">
-              <Button variant="link">
-                <Link to={`/products/${item?.product}`}>{item?.name}</Link>
+            <TableCell className="font-bold flex justify-center items-center gap-2">
+              <Button variant="outline" className="text-green-500">
+                <Link to={`/products/${item?.product}`}>
+                  <EyeIcon />
+                </Link>
+              </Button>
+              <Button variant="outline" className="text-blue-500">
+                <Link to={`/products/${item?.product}`}>
+                  <Printer />
+                </Link>
               </Button>
             </TableCell>
           </TableRow>
