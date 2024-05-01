@@ -27,6 +27,7 @@ export const orderApi = createApi({
       query: (id) => ({
         url: `/orders/${id}`,
       }),
+      // keepUnusedDataFor: 180,
     }),
   }),
 });

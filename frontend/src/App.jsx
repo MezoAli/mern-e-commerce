@@ -19,6 +19,7 @@ import Cart from "./pages/Cart";
 import ShippingInfo from "./pages/ShippingInfo";
 import ConfirmOrder from "./pages/ConfirmOrder";
 import SingleOrder from "./pages/SingleOrder";
+import Invoice from "./pages/Invoice";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedLayout>
             <SingleOrder />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: "/orders/invoice/:orderId",
+        element: (
+          <ProtectedLayout>
+            <Invoice />
           </ProtectedLayout>
         ),
       },

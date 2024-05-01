@@ -46,7 +46,7 @@ const OrdersTable = ({ orders }) => {
             <TableCell>{item?.orderStatus}</TableCell>
             <TableCell className="font-bold flex justify-center items-center gap-2">
               <Button variant="outline" className="text-green-500">
-                <Link to={`/products/${item?.product}`}>
+                <Link to={`/orders/invoice/${item?._id}`}>
                   <EyeIcon />
                 </Link>
               </Button>

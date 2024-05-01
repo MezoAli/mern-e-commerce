@@ -10,7 +10,7 @@ const OrderDetails = ({ order }) => {
           <Link to="/orders">Back to Orders</Link>
         </Button>
         <Button>
-          <Link>Invoice </Link>
+          <Link to={`/orders/invoice/${order?._id}`}>Invoice </Link>
         </Button>
       </div>
       <div className="flex w-full flex-col justify-start items-start gap-4">

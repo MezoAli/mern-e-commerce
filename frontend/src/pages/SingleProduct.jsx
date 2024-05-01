@@ -6,11 +6,14 @@ import toast from "react-hot-toast";
 import Metadata from "@/components/layout/Metadata";
 import ReviewsGrid from "@/components/product/ReviewsGrid";
 import ReviewForm from "@/components/product/ReviewForm";
+import { useGetAllOrdersForUserQuery } from "@/store/api/orderApi";
 
 const SingleProduct = () => {
   const { id } = useParams();
   const { data, isError, isLoading, error } =
     useGetSingleProductDetailsQuery(id);
+
+  const { data: ordersData } = useGetAllOrdersForUserQuery();
   useEffect(() => {
     if (isError) {
       toast.error(error?.data?.message);
@@ -21,6 +24,13 @@ const SingleProduct = () => {
     return <p className="text-center text-3xl">Loading...</p>;
   }
 
+  const userOrdersItems = ordersData?.orders?.flatMap((order) => {
+    return order.orderItems;
+  });
+  const findProductInUserOrders = userOrdersItems.find(
+    (item) => item?.product === data?.product?._id
+  );
+
   return (
     <>
       <Metadata
@@ -28,7 +38,13 @@ const SingleProduct = () => {
         description={data?.product?.description}
       />
       <SingleProductDetails product={data?.product} />
-      <ReviewForm productId={data?.product?._id} />
+      {findProductInUserOrders ? (
+        <ReviewForm productId={data?.product?._id} />
+      ) : (
+        <p className="text-center text-xl capitalize my-4 text-red-500">
+          you have to purchase the product to add review to it
+        </p>
+      )}
       {data?.product?.reviews.length > 0 ? (
         <ReviewsGrid reviews={data?.product?.reviews} />
       ) : (

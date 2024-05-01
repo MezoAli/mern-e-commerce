@@ -43,6 +43,7 @@ const SingleProductDetails = ({ product }) => {
 
     toast.success("Item added to cart");
   };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-[80px] max-w-4xl mx-auto">
       <div className="col-span-2 mt-20">

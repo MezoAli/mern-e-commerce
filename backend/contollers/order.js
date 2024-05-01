@@ -31,7 +31,7 @@ export const getSingleOrder = catchAsyncErrors(async (req, res, next) => {
   if (!order) {
     return next(new ErrorHandler(`no order found with that id: ${id}`));
   }
-  res.status(201).json({ order });
+  res.status(200).json({ order });
 });
 
 export const getSingleOrderForAdmin = catchAsyncErrors(
@@ -43,7 +43,7 @@ export const getSingleOrderForAdmin = catchAsyncErrors(
     if (!order) {
       return next(new ErrorHandler(`no order found with that id: ${id}`));
     }
-    res.status(201).json({ order });
+    res.status(200).json({ order });
   }
 );
 
@@ -52,7 +52,7 @@ export const getAllOrdersForUser = catchAsyncErrors(async (req, res, next) => {
     user: req.user._id,
   });
 
-  res.status(201).json({ orders });
+  res.status(200).json({ orders });
 });
 
 export const getAllOrdersForAdmin = catchAsyncErrors(async (req, res, next) => {
@@ -64,7 +64,7 @@ export const getAllOrdersForAdmin = catchAsyncErrors(async (req, res, next) => {
 
   const orders = await Order.find(searchOptions);
 
-  res.status(201).json({ noOfOrders: orders.length, orders });
+  res.status(200).json({ noOfOrders: orders.length, orders });
 });
 
 export const updateOrder = catchAsyncErrors(async (req, res, next) => {
