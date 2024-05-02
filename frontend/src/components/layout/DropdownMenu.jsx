@@ -26,6 +26,17 @@ export function DropdownMenuDemo({ user }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 space-y-3">
+        {user?.role === "admin" && (
+          <DropdownMenuItem className="hover:bg-orange-500">
+            <Link
+              to="/admin/dashboard"
+              className="flex gap-1 text-lg justify-center items-center"
+            >
+              <User className="mr-2 h-4 w-4" />
+              <span>Dashboard</span>
+            </Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem className="hover:bg-orange-500">
           <Link
             to="/profile"

@@ -20,6 +20,8 @@ import ShippingInfo from "./pages/ShippingInfo";
 import ConfirmOrder from "./pages/ConfirmOrder";
 import SingleOrder from "./pages/SingleOrder";
 import Invoice from "./pages/Invoice";
+import Dashboard from "./pages/Dashboard";
+import AdminProtectedLayout from "./components/auth/AdminProtectedLayout";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +72,14 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/payment_method", element: <PaymentMethod /> },
+      {
+        path: "/admin/dashboard",
+        element: (
+          <AdminProtectedLayout>
+            <Dashboard />
+          </AdminProtectedLayout>
+        ),
+      },
       { path: "/cart", element: <Cart /> },
       { path: "/shipping", element: <ShippingInfo /> },
       { path: "/confirm_order", element: <ConfirmOrder /> },
