@@ -10,10 +10,12 @@ import { removeTotalCartItems } from "@/store/slices/cartSlice";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const PaymentMethod = () => {
   const [payment, setPayment] = useState("");
   const { shippingInfo, cartItems } = useSelector((state) => state.cartSlice);
+  const navigate = useNavigate();
   const { cartTotal, totalAmount, shippingAmount, taxAmount } =
     calculateCartAmounts(cartItems);
   const dispatch = useDispatch();
@@ -70,6 +72,7 @@ const PaymentMethod = () => {
       window.location.href = data?.url;
     }
   }, [stripeIsError, stripeIsSuccess]);
+
   return (
     <form
       className="flex flex-col gap-10 shadow-lg p-5 max-w-xl mx-auto"

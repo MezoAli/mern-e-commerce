@@ -32,6 +32,7 @@ const LoginForm = () => {
       navigate("/");
     }
   }, [isError, isSuccess, isAuthenticated]);
+
   return (
     <form
       className="flex flex-col gap-10 shadow-lg p-5"

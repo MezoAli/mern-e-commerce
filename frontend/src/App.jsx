@@ -20,8 +20,14 @@ import ShippingInfo from "./pages/ShippingInfo";
 import ConfirmOrder from "./pages/ConfirmOrder";
 import SingleOrder from "./pages/SingleOrder";
 import Invoice from "./pages/Invoice";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/admin/Dashboard";
 import AdminProtectedLayout from "./components/auth/AdminProtectedLayout";
+import AdminLayout from "./components/layout/AdminLayout";
+import NewProduct from "./pages/admin/NewProduct";
+import Products from "./pages/admin/Products";
+import AdminOrders from "./pages/admin/Orders";
+import Reviews from "./pages/admin/Reviews";
+import Users from "./pages/admin/Users";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +50,25 @@ const router = createBrowserRouter([
           },
           { path: "/profile/update_password", element: <UpdatePassword /> },
           { path: "/profile/upload_avatar", element: <UploadAvatar /> },
+        ],
+      },
+      {
+        path: "/admin/dashboard",
+        element: (
+          <AdminProtectedLayout>
+            <AdminLayout />
+          </AdminProtectedLayout>
+        ),
+        children: [
+          { path: "/admin/dashboard", element: <Dashboard /> },
+          {
+            path: "/admin/dashboard/product/new",
+            element: <NewProduct />,
+          },
+          { path: "/admin/dashboard/products", element: <Products /> },
+          { path: "/admin/dashboard/orders", element: <AdminOrders /> },
+          { path: "/admin/dashboard/reviews", element: <Reviews /> },
+          { path: "/admin/dashboard/users", element: <Users /> },
         ],
       },
       ,
@@ -71,13 +96,12 @@ const router = createBrowserRouter([
           </ProtectedLayout>
         ),
       },
-      { path: "/payment_method", element: <PaymentMethod /> },
       {
-        path: "/admin/dashboard",
+        path: "/payment_method",
         element: (
-          <AdminProtectedLayout>
-            <Dashboard />
-          </AdminProtectedLayout>
+          <ProtectedLayout>
+            <PaymentMethod />
+          </ProtectedLayout>
         ),
       },
       { path: "/cart", element: <Cart /> },

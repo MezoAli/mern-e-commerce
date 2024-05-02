@@ -1,28 +1,6 @@
-import { UserRound, LockIcon, ClipboardPlus, BookImage } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-const MENU_ITEMS = [
-  {
-    name: "Profile",
-    link: "/profile",
-    icon: <UserRound />,
-  },
-  {
-    name: "Update Profile",
-    link: "/profile/update_profile",
-    icon: <ClipboardPlus />,
-  },
-  {
-    name: "Update Password",
-    link: "/profile/update_password",
-    icon: <LockIcon />,
-  },
-  {
-    name: "Upload Avatar",
-    link: "/profile/upload_avatar",
-    icon: <BookImage />,
-  },
-];
-const Sidebar = () => {
+
+const Sidebar = ({ MENU_ITEMS }) => {
   const location = useLocation();
 
   return (
