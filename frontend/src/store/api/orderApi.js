@@ -29,6 +29,15 @@ export const orderApi = createApi({
       }),
       // keepUnusedDataFor: 180,
     }),
+    // getSales: builder.query({
+    //   query: (params) => ({
+    //     url: "/admin/get_sales",
+    //     params: {
+    //       startDate: params.startDate,
+    //       endDate: params.endDate,
+    //     },
+    //   }),
+    // }),
   }),
 });
 
@@ -37,4 +46,5 @@ export const {
   useCreateStripeOrderMutation,
   useGetAllOrdersForUserQuery,
   useGetSingleOrderQuery,
+  // useGetSalesQuery,
 } = orderApi;

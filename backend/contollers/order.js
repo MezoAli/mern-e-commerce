@@ -2,6 +2,8 @@ import Order from "../models/order.js";
 import Product from "../models/product.js";
 import ErrorHandler from "../utils/errorHnadler.js";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
+import { getDatesBetween } from "../utils/getDatesBetween.js";
+import { getSales } from "../utils/getSales.js";
 
 export const createOrder = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user._id;
@@ -93,4 +95,19 @@ export const deleteOrder = catchAsyncErrors(async (req, res, next) => {
   }
 
   res.status(201).json({ msg: "order deleted successfully" });
+});
+
+export const getSalesForAdmin = catchAsyncErrors(async (req, res, next) => {
+  const startDate = new Date(req.query.startDate);
+  const endDate = new Date(req.query.endDate);
+
+  startDate.setUTCHours(0, 0, 0, 0);
+  endDate.setUTCHours(23, 59, 59, 999);
+
+  const { totalOrders, totalSales, finalSalesResults } = await getSales(
+    startDate,
+    endDate
+  );
+
+  res.status(200).json({ totalOrders, totalSales, finalSalesResults });
 });

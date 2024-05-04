@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+// import { useGetSalesQuery } from "@/store/api/orderApi";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
@@ -7,9 +8,30 @@ import "react-datepicker/dist/react-datepicker.css";
 const Dashboard = () => {
   const [startDate, setStartDate] = useState(new Date().setDate(1));
   const [endDate, setEndDate] = useState(new Date());
+  // const { data, isLoading, error } = useGetSalesQuery({
+  //   startDate: new Date(startDate).toISOString(),
+  //   endDate: endDate.toISOString(),
+  // });
+
+  // console.log(data);
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const params = {
+  //     startDate: new Date(startDate).toISOString(),
+  //     endDate: endDate.toISOString(),
+  //   };
+
+  //   console.log(params);
+  // };
+
   return (
     <div className="flex flex-col justify-center items-start gap-12">
-      <div className="flex justify-center items-center gap-6">
+      <form
+        // onSubmit={handleSubmit}
+        className="flex justify-center items-center gap-6"
+      >
         <div className="flex flex-col gap-3">
           <label className="font-semibold">Start Date</label>
           <DatePicker
@@ -34,7 +56,7 @@ const Dashboard = () => {
           />
         </div>
         <Button variant="auth">Fetch</Button>
-      </div>
+      </form>
       <div className="flex w-full justify-between items-center">
         <div
           className="bg-green-500 rounded-lg py-6 flex
