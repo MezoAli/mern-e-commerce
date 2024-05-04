@@ -31,6 +31,7 @@ export const productsApi = createApi({
       query: () => ({
         url: `/admin/products`,
       }),
+      providesTags: ["AllProducts"],
     }),
     addReview: builder.mutation({
       query: (body) => ({
@@ -40,6 +41,14 @@ export const productsApi = createApi({
       }),
       invalidatesTags: ["Product", "AllProducts"],
     }),
+    createProduct: builder.mutation({
+      query: (body) => ({
+        url: "/admin/products",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["AllProducts"],
+    }),
   }),
 });
 
@@ -48,4 +57,5 @@ export const {
   useGetSingleProductDetailsQuery,
   useAddReviewMutation,
   useGetAllProductForAdminQuery,
+  useCreateProductMutation,
 } = productsApi;

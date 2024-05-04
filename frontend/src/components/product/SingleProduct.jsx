@@ -60,6 +60,13 @@ const SingleProductDetails = ({ product }) => {
                 </CarouselItem>
               );
             })}
+            {product?.images?.length === 0 && (
+              <img
+                src="../../../images/default_product.png"
+                alt={product.name}
+                className="h-[300px] w-full rounded-lg"
+              />
+            )}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
