@@ -163,3 +163,11 @@ export const deleteReview = catchAsyncErrors(async (req, res, next) => {
 
   res.status(201).json({ msg: "review deleted Successfully" });
 });
+
+export const getAllProductsForAdmin = catchAsyncErrors(
+  async (req, res, next) => {
+    const products = await Product.find();
+
+    res.status(200).json({ products });
+  }
+);

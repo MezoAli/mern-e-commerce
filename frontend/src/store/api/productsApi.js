@@ -27,6 +27,11 @@ export const productsApi = createApi({
       }),
       providesTags: ["Product"],
     }),
+    getAllProductForAdmin: builder.query({
+      query: () => ({
+        url: `/admin/products`,
+      }),
+    }),
     addReview: builder.mutation({
       query: (body) => ({
         url: `/products/reviews`,
@@ -42,4 +47,5 @@ export const {
   useGetProductsQuery,
   useGetSingleProductDetailsQuery,
   useAddReviewMutation,
+  useGetAllProductForAdminQuery,
 } = productsApi;
