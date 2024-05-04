@@ -32,7 +32,7 @@ const OrdersTable = ({ orders }) => {
                 <Link to={`/orders/${item?._id}`}>{item?._id}</Link>
               </Button>
             </TableCell>
-            <TableCell>$ {item?.totalAmount}</TableCell>
+            <TableCell>$ {(item?.totalAmount).toFixed(2)}</TableCell>
             <TableCell
               className={`${
                 item?.paymentInfo?.status === "paid"

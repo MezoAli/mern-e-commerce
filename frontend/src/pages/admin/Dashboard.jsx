@@ -5,13 +5,12 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState(new Date().setDate(1));
   const [endDate, setEndDate] = useState(new Date());
-  const [sales, setSales] = useState(0);
-  const [orders, setOrders] = useState(0);
-  const [getSales, { data, isLoading, error, isSuccess }] =
+  const [getSales, { data, isLoading, error, isError }] =
     useLazyGetSalesQuery();
 
   const handleSubmit = async (e) => {
@@ -25,11 +24,17 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (isSuccess) {
-      setSales(data?.totalSales);
-      setOrders(data?.totalOrders);
+    if (isError) {
+      toast.error(data?.error?.message);
     }
-  }, [isSuccess, data?.totalSales, data?.totalOrders]);
+    if (startDate && endDate && !data) {
+      const params = {
+        startDate: new Date(startDate).toISOString(),
+        endDate: endDate.toISOString(),
+      };
+      getSales(params);
+    }
+  }, [isError]);
 
   return (
     <div className="flex flex-col justify-center items-start gap-12">
@@ -70,14 +75,14 @@ const Dashboard = () => {
          justify-center items-center flex-col font-bold text-xl w-[45%]"
         >
           <h3>Sales</h3>
-          <p>$ {isLoading ? "Loading" : sales}</p>
+          <p>$ {isLoading ? "Loading" : data?.totalSales}</p>
         </div>
         <div
           className="bg-red-500 rounded-lg py-6 flex justify-center
          items-center flex-col font-bold text-xl w-[45%]"
         >
           <h3>Orders</h3>
-          <p>{isLoading ? "Loading" : orders}</p>
+          <p>{isLoading ? "Loading" : data?.totalOrders}</p>
         </div>
       </div>
       <div className="w-full">

@@ -42,7 +42,12 @@ const CartSummary = ({ cartItems, tax }) => {
           <div className="flex justify-between gap-8 items-center font-semibold">
             <p className="text-xl font-bold">Total : </p>
             <span>
-              {Number(cartTotal) + Number(taxAmount) + Number(shippingAmount)} $
+              {(
+                Number(cartTotal) +
+                Number(taxAmount) +
+                Number(shippingAmount)
+              ).toFixed(2)}{" "}
+              $
             </span>
           </div>
           <hr />
