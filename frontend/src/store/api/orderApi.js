@@ -27,17 +27,16 @@ export const orderApi = createApi({
       query: (id) => ({
         url: `/orders/${id}`,
       }),
-      // keepUnusedDataFor: 180,
     }),
-    // getSales: builder.query({
-    //   query: (params) => ({
-    //     url: "/admin/get_sales",
-    //     params: {
-    //       startDate: params.startDate,
-    //       endDate: params.endDate,
-    //     },
-    //   }),
-    // }),
+    getSales: builder.query({
+      query: (params) => ({
+        url: "/admin/get_sales",
+        params: {
+          startDate: params.startDate,
+          endDate: params.endDate,
+        },
+      }),
+    }),
   }),
 });
 
@@ -46,5 +45,5 @@ export const {
   useCreateStripeOrderMutation,
   useGetAllOrdersForUserQuery,
   useGetSingleOrderQuery,
-  // useGetSalesQuery,
+  useLazyGetSalesQuery,
 } = orderApi;

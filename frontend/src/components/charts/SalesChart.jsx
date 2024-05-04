@@ -66,7 +66,7 @@ export default function SalesChart({ salesData }) {
       },
       {
         label: "Orders",
-        data: salesData?.map((data) => data?.numOrders),
+        data: salesData?.map((data) => data?.orders),
         borderColor: "rgb(220, 52, 69)",
         backgroundColor: "rgba(201, 68, 82, 0.5)",
         yAxisID: "y1",

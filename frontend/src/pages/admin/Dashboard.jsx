@@ -1,6 +1,7 @@
+import SalesChart from "@/components/charts/SalesChart";
 import { Button } from "@/components/ui/button";
-// import { useGetSalesQuery } from "@/store/api/orderApi";
-import React, { useState } from "react";
+import { useLazyGetSalesQuery } from "@/store/api/orderApi";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,28 +9,32 @@ import "react-datepicker/dist/react-datepicker.css";
 const Dashboard = () => {
   const [startDate, setStartDate] = useState(new Date().setDate(1));
   const [endDate, setEndDate] = useState(new Date());
-  // const { data, isLoading, error } = useGetSalesQuery({
-  //   startDate: new Date(startDate).toISOString(),
-  //   endDate: endDate.toISOString(),
-  // });
+  const [sales, setSales] = useState(0);
+  const [orders, setOrders] = useState(0);
+  const [getSales, { data, isLoading, error, isSuccess }] =
+    useLazyGetSalesQuery();
 
-  // console.log(data);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+    const params = {
+      startDate: new Date(startDate).toISOString(),
+      endDate: endDate.toISOString(),
+    };
+    getSales(params);
+  };
 
-  //   const params = {
-  //     startDate: new Date(startDate).toISOString(),
-  //     endDate: endDate.toISOString(),
-  //   };
-
-  //   console.log(params);
-  // };
+  useEffect(() => {
+    if (isSuccess) {
+      setSales(data?.totalSales);
+      setOrders(data?.totalOrders);
+    }
+  }, [isSuccess, data?.totalSales, data?.totalOrders]);
 
   return (
     <div className="flex flex-col justify-center items-start gap-12">
       <form
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         className="flex justify-center items-center gap-6"
       >
         <div className="flex flex-col gap-3">
@@ -55,7 +60,9 @@ const Dashboard = () => {
             className="border rounded-lg p-1"
           />
         </div>
-        <Button variant="auth">Fetch</Button>
+        <Button variant="auth" disabled={isLoading}>
+          {isLoading ? "Fetching..." : "Fetch"}
+        </Button>
       </form>
       <div className="flex w-full justify-between items-center">
         <div
@@ -63,18 +70,19 @@ const Dashboard = () => {
          justify-center items-center flex-col font-bold text-xl w-[45%]"
         >
           <h3>Sales</h3>
-          <p>$ 00</p>
+          <p>$ {isLoading ? "Loading" : sales}</p>
         </div>
         <div
           className="bg-red-500 rounded-lg py-6 flex justify-center
          items-center flex-col font-bold text-xl w-[45%]"
         >
           <h3>Orders</h3>
-          <p>0</p>
+          <p>{isLoading ? "Loading" : orders}</p>
         </div>
-        <div></div>
       </div>
-      <div></div>
+      <div className="w-full">
+        <SalesChart salesData={data?.finalSalesResults} />
+      </div>
     </div>
   );
 };
