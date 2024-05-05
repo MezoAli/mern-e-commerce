@@ -10,9 +10,27 @@ import {
   TableRow,
 } from "../ui/table";
 import { Edit2Icon, ImageIcon, Trash2Icon } from "lucide-react";
-import { memo } from "react";
+import { memo, useEffect } from "react";
+import { useDeleteProductMutation } from "@/store/api/productsApi";
+import toast from "react-hot-toast";
 
 const ProductsTable = ({ products }) => {
+  const [deleteProduct, { isLoading, isSuccess, error, isError }] =
+    useDeleteProductMutation();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success("Product delete Successfully");
+    }
+  }, [isSuccess, isError]);
+
+  if (isLoading) {
+    return <p className="text-center text-2xl font-bold my-8">Loading...</p>;
+  }
+
   return (
     <>
       <Table className="w-full col-span-1 md:col-span-3">
@@ -47,10 +65,14 @@ const ProductsTable = ({ products }) => {
                     <ImageIcon />
                   </Link>
                 </Button>
-                <Button variant="outline" className="text-red-500">
-                  <Link to={`/orders/invoice/${item?._id}`}>
-                    <Trash2Icon />
-                  </Link>
+                <Button
+                  variant="outline"
+                  className="text-red-500"
+                  onClick={() => {
+                    deleteProduct(item?._id);
+                  }}
+                >
+                  <Trash2Icon />
                 </Button>
               </TableCell>
             </TableRow>
