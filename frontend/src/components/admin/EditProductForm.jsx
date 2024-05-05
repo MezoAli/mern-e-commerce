@@ -1,5 +1,5 @@
 import { CATEGORIES } from "@/constants";
-import { useCreateProductMutation } from "@/store/api/productsApi";
+import { useUpdateProductMutation } from "@/store/api/productsApi";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,8 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
 const EditProductForm = ({ product }) => {
-  const [createProduct, { isError, error, isSuccess, isLoading }] =
-    useCreateProductMutation();
+  const [updateProduct, { isError, error, isSuccess, isLoading }] =
+    useUpdateProductMutation();
   const navigate = useNavigate();
   const [state, setState] = useState({
     name: product?.name,
@@ -26,7 +26,7 @@ const EditProductForm = ({ product }) => {
       toast.error(error?.data?.message);
     }
     if (isSuccess) {
-      toast.success("Product Created Successfully");
+      toast.success("Product Updated Successfully");
       navigate("/admin/dashboard/products");
     }
   }, [isError, isSuccess]);
@@ -49,7 +49,10 @@ const EditProductForm = ({ product }) => {
       seller: state?.seller,
     };
 
-    createProduct(data);
+    updateProduct({
+      productId: product?._id,
+      body: data,
+    });
   };
 
   return (
