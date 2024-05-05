@@ -33,7 +33,7 @@ const SingleProductDetails = ({ product }) => {
     const cartItem = {
       product: product?._id,
       name: product?.name,
-      image: product?.images[0].url,
+      image: product?.images[0]?.url || "",
       price: product?.price,
       stock: product?.stock,
       quantity,

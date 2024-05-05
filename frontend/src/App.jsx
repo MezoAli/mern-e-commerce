@@ -28,6 +28,7 @@ import Products from "./pages/admin/Products";
 import AdminOrders from "./pages/admin/Orders";
 import Reviews from "./pages/admin/Reviews";
 import Users from "./pages/admin/Users";
+import EditProduct from "./pages/admin/EditProduct";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
             element: <NewProduct />,
           },
           { path: "/admin/dashboard/products", element: <Products /> },
+          {
+            path: "/admin/dashboard/products/:productId",
+            element: <EditProduct />,
+          },
           { path: "/admin/dashboard/orders", element: <AdminOrders /> },
           { path: "/admin/dashboard/reviews", element: <Reviews /> },
           { path: "/admin/dashboard/users", element: <Users /> },
