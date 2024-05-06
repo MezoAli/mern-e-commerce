@@ -29,6 +29,7 @@ import AdminOrders from "./pages/admin/Orders";
 import Reviews from "./pages/admin/Reviews";
 import Users from "./pages/admin/Users";
 import EditProduct from "./pages/admin/EditProduct";
+import UploadProductImages from "./pages/admin/UploadProductImages";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
           {
             path: "/admin/dashboard/products/:productId",
             element: <EditProduct />,
+          },
+          {
+            path: "/admin/dashboard/products/:productId/upload_images",
+            element: <UploadProductImages />,
           },
           { path: "/admin/dashboard/orders", element: <AdminOrders /> },
           { path: "/admin/dashboard/reviews", element: <Reviews /> },

@@ -61,7 +61,9 @@ const ProductsTable = ({ products }) => {
                   </Link>
                 </Button>
                 <Button variant="outline" className="text-blue-500">
-                  <Link to={`/orders/${item?._id}`}>
+                  <Link
+                    to={`/admin/dashboard/products/${item?._id}/upload_images`}
+                  >
                     <ImageIcon />
                   </Link>
                 </Button>

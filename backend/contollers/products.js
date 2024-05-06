@@ -1,6 +1,7 @@
 import Product from "../models/product.js";
 import ErrorHandler from "../utils/errorHnadler.js";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
+import { uploadImage } from "../utils/cloudinary.js";
 
 export const getAllProducts = catchAsyncErrors(async (req, res) => {
   const searchObject = {};
@@ -171,3 +172,27 @@ export const getAllProductsForAdmin = catchAsyncErrors(
     res.status(200).json({ products });
   }
 );
+
+export const uploadProductImages = catchAsyncErrors(async (req, res, next) => {
+  const productId = req?.params?.productId;
+  const images = req?.body;
+
+  const product = await Product.findById(productId);
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+
+  const imagesArray = [];
+  await Promise.all(
+    images.map(async (image) => {
+      const result = await uploadImage(image, "mezo-shopping/products");
+      imagesArray.push({ url: result?.url, public_id: result?.public_id });
+    })
+  );
+
+  product.images.push(...imagesArray);
+
+  await product.save({ validateBeforeSave: false });
+
+  res.status(201).json({ message: "Images uploaded successfully" });
+});
