@@ -8,7 +8,7 @@ import {
 } from "@/store/api/productsApi";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Trash2Icon } from "lucide-react";
 
 const UploadProductImages = () => {
@@ -93,7 +93,7 @@ const UploadProductImages = () => {
               {productData?.product?.images?.map((image) => {
                 return (
                   <div
-                    className="flex flex-col justify-center items-center gap-1"
+                    className="flex flex-col justify-center items-center gap-2"
                     key={`${image?._id}`}
                   >
                     <img
@@ -124,12 +124,32 @@ const UploadProductImages = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 bg-slate-200 rounded-xl mb-6 p-4">
               {previewImages?.map((image, index) => {
                 return (
-                  <img
+                  <div
                     key={`product_image-${index}`}
-                    alt={`product_image-${index}`}
-                    src={image}
-                    className="rounded-lg w-40 h-40"
-                  />
+                    className="flex flex-col justify-center items-center gap-2"
+                  >
+                    <img
+                      alt={`product_image-${index}`}
+                      src={image}
+                      className="rounded-lg w-40 h-40"
+                    />
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => {
+                        setPreviewImages((prev) => {
+                          const newState = prev.filter((img) => img !== image);
+                          return newState;
+                        });
+                        setImages((prev) => {
+                          const newState = prev.filter((img) => img !== image);
+                          return newState;
+                        });
+                      }}
+                    >
+                      <Trash2Icon />
+                    </Button>
+                  </div>
                 );
               })}
             </div>
