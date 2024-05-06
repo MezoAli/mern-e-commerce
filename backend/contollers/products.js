@@ -1,7 +1,7 @@
 import Product from "../models/product.js";
 import ErrorHandler from "../utils/errorHnadler.js";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
-import { uploadImage } from "../utils/cloudinary.js";
+import { deleteImage, uploadImage } from "../utils/cloudinary.js";
 
 export const getAllProducts = catchAsyncErrors(async (req, res) => {
   const searchObject = {};
@@ -85,10 +85,22 @@ export const updateProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const deleteProduct = catchAsyncErrors(async (req, res, next) => {
-  const product = await Product.findByIdAndDelete(req.params.id);
+  const product = await Product.findById(req.params.id);
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
   }
+
+  const images = product?.images;
+  if (images?.length > 0) {
+    await Promise.all(
+      images.map(async (image) => {
+        await deleteImage(image?.public_id);
+      })
+    );
+  }
+
+  await product.deleteOne();
+
   res.status(200).json({ msg: "product deleted Successfully" });
 });
 
