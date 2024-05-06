@@ -64,9 +64,9 @@ export const getAllOrdersForAdmin = catchAsyncErrors(async (req, res, next) => {
     searchOptions._id = id;
   }
 
-  const orders = await Order.find(searchOptions);
+  const orders = await Order.find(searchOptions).populate("user");
 
-  res.status(200).json({ noOfOrders: orders.length, orders });
+  res.status(200).json({ orders });
 });
 
 export const updateOrder = catchAsyncErrors(async (req, res, next) => {

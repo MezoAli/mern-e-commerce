@@ -37,6 +37,11 @@ export const orderApi = createApi({
         },
       }),
     }),
+    getAllOrdersForAdmin: builder.query({
+      query: () => ({
+        url: "/admin/orders",
+      }),
+    }),
   }),
 });
 
@@ -46,4 +51,5 @@ export const {
   useGetAllOrdersForUserQuery,
   useGetSingleOrderQuery,
   useLazyGetSalesQuery,
+  useGetAllOrdersForAdminQuery,
 } = orderApi;
