@@ -208,3 +208,22 @@ export const uploadProductImages = catchAsyncErrors(async (req, res, next) => {
 
   res.status(201).json({ message: "Images uploaded successfully" });
 });
+
+export const deleteProductImage = catchAsyncErrors(async (req, res, next) => {
+  let product = await Product.findById(req.params.productId);
+
+  const imagePublic_id = req?.body?.publicId;
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+
+  await deleteImage(imagePublic_id);
+
+  product.images = product?.images?.filter(
+    (image) => image?.public_id !== imagePublic_id
+  );
+
+  await product.save({ validateBeforeSave: false });
+
+  res.status(200).json({ message: "image deleted Successfully" });
+});

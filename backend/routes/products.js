@@ -10,6 +10,7 @@ import {
   deleteReview,
   getAllProductsForAdmin,
   uploadProductImages,
+  deleteProductImage,
 } from "../contollers/products.js";
 import { isAuthenticated } from "../middlewares/isAuthenticated.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
@@ -25,6 +26,12 @@ router.patch(
   isAuthenticated,
   isAdmin,
   uploadProductImages
+);
+router.patch(
+  "/admin/products/:productId/delete_image",
+  isAuthenticated,
+  isAdmin,
+  deleteProductImage
 );
 router.delete("/admin/products/:id", isAuthenticated, isAdmin, deleteProduct);
 
