@@ -94,7 +94,7 @@ export const deleteOrder = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler(`no order found with that id: ${id}`));
   }
 
-  res.status(201).json({ msg: "order deleted successfully" });
+  res.status(201).json({ message: "order deleted successfully" });
 });
 
 export const getSalesForAdmin = catchAsyncErrors(async (req, res, next) => {

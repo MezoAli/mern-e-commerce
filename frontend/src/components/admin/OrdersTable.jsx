@@ -12,23 +12,24 @@ import {
 import { Edit2Icon, Trash2Icon } from "lucide-react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useDeleteOrderMutation } from "@/store/api/orderApi";
 
 const OrdersTable = ({ orders }) => {
-  //   const [deleteProduct, { isLoading, isSuccess, error, isError }] =
-  //     useDeleteProductMutation();
+  const [deleteOrder, { isLoading, isSuccess, error, isError, data }] =
+    useDeleteOrderMutation();
 
-  //   useEffect(() => {
-  //     if (isError) {
-  //       toast.error(error?.data?.message);
-  //     }
-  //     if (isSuccess) {
-  //       toast.success("Product delete Successfully");
-  //     }
-  //   }, [isSuccess, isError]);
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success(data?.message);
+    }
+  }, [isSuccess, isError]);
 
-  //   if (isLoading) {
-  //     return <p className="text-center text-2xl font-bold my-8">Loading...</p>;
-  //   }
+  if (isLoading) {
+    return <p className="text-center text-2xl font-bold my-8">Loading...</p>;
+  }
 
   return (
     <>
@@ -39,6 +40,7 @@ const OrdersTable = ({ orders }) => {
             <TableHead className="w-[130px]">Order Id</TableHead>
             <TableHead>Payment Status</TableHead>
             <TableHead>Order Status</TableHead>
+            <TableHead>Created At</TableHead>
             <TableHead className="text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -49,6 +51,9 @@ const OrdersTable = ({ orders }) => {
               <TableCell>{item?.paymentInfo?.status}</TableCell>
 
               <TableCell>{item?.orderStatus}</TableCell>
+              <TableCell>
+                {new Date(item?.createdAt).toLocaleDateString()}
+              </TableCell>
               <TableCell className="font-bold flex justify-center items-center gap-2">
                 <Button variant="outline" className="text-green-500">
                   <Link to={`/admin/dashboard/products/${item?._id}`}>
@@ -58,8 +63,9 @@ const OrdersTable = ({ orders }) => {
                 <Button
                   variant="outline"
                   className="text-red-500"
+                  disabled={isLoading}
                   onClick={() => {
-                    // deleteProduct(item?._id);
+                    deleteOrder(item?._id);
                   }}
                 >
                   <Trash2Icon />

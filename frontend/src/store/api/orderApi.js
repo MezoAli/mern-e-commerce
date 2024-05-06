@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api/v1" }),
+  tagTypes: ["AdminOrders"],
   endpoints: (builder) => ({
     createOrder: builder.mutation({
       query: (body) => ({
@@ -41,6 +42,14 @@ export const orderApi = createApi({
       query: () => ({
         url: "/admin/orders",
       }),
+      providesTags: ["AdminOrders"],
+    }),
+    deleteOrder: builder.mutation({
+      query: (orderId) => ({
+        url: `/admin/orders/${orderId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["AdminOrders"],
     }),
   }),
 });
@@ -52,4 +61,5 @@ export const {
   useGetSingleOrderQuery,
   useLazyGetSalesQuery,
   useGetAllOrdersForAdminQuery,
+  useDeleteOrderMutation,
 } = orderApi;
