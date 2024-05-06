@@ -15,7 +15,6 @@ const UploadProductImages = () => {
   const { productId } = useParams();
   const [images, setImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
-  const navigate = useNavigate();
   const { data: productData } = useGetSingleProductDetailsQuery(productId);
 
   const [uploadImages, { data, isError, error, isSuccess, isLoading }] =
@@ -54,6 +53,10 @@ const UploadProductImages = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (images?.length === 0) {
+      toast.error("please select image first");
+      return;
+    }
     uploadImages({ productId, body: images });
   };
 
@@ -61,17 +64,23 @@ const UploadProductImages = () => {
     if (isError) {
       toast.error(error?.data?.message);
     }
+
+    if (isSuccess) {
+      toast.success(data?.message);
+      setPreviewImages([]);
+      setImages([]);
+    }
+  }, [isError, isSuccess]);
+
+  useEffect(() => {
     if (deleteImageIsError) {
       toast.error(deleteImageError?.data?.message);
     }
-    if (isSuccess) {
-      toast.success(data?.message);
-      navigate(`/products/${productId}`);
-    }
+
     if (deleteImageIsSuccess) {
       toast.success(deleteImageData?.message);
     }
-  }, [isError, isSuccess, deleteImageIsError, deleteImageIsSuccess]);
+  }, [deleteImageIsError, deleteImageIsSuccess]);
 
   return (
     <div>

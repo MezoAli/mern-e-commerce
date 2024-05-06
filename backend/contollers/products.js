@@ -199,6 +199,7 @@ export const uploadProductImages = catchAsyncErrors(async (req, res, next) => {
     images.map(async (image) => {
       const result = await uploadImage(image, "mezo-shopping/products");
       imagesArray.push({ url: result?.url, public_id: result?.public_id });
+      return result;
     })
   );
 
