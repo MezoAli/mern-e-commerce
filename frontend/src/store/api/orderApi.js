@@ -44,10 +44,23 @@ export const orderApi = createApi({
       }),
       providesTags: ["AdminOrders"],
     }),
+    getOrderDetailsForAdmin: builder.query({
+      query: (orderId) => ({
+        url: `/admin/orders/${orderId}`,
+      }),
+    }),
     deleteOrder: builder.mutation({
       query: (orderId) => ({
         url: `/admin/orders/${orderId}`,
         method: "DELETE",
+      }),
+      invalidatesTags: ["AdminOrders"],
+    }),
+    updateOrder: builder.mutation({
+      query: ({ orderId, body }) => ({
+        url: `/admin/orders/${orderId}`,
+        method: "PUT",
+        body,
       }),
       invalidatesTags: ["AdminOrders"],
     }),
@@ -62,4 +75,6 @@ export const {
   useLazyGetSalesQuery,
   useGetAllOrdersForAdminQuery,
   useDeleteOrderMutation,
+  useUpdateOrderMutation,
+  useGetOrderDetailsForAdminQuery,
 } = orderApi;

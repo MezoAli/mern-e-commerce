@@ -56,7 +56,7 @@ const OrdersTable = ({ orders }) => {
               </TableCell>
               <TableCell className="font-bold flex justify-center items-center gap-2">
                 <Button variant="outline" className="text-green-500">
-                  <Link to={`/admin/dashboard/products/${item?._id}`}>
+                  <Link to={`/admin/dashboard/orders/${item?._id}`}>
                     <Edit2Icon />
                   </Link>
                 </Button>

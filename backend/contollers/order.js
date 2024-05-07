@@ -41,7 +41,7 @@ export const getSingleOrderForAdmin = catchAsyncErrors(
     const id = req.params.id;
     const order = await Order.findOne({
       _id: id,
-    });
+    }).populate("user");
     if (!order) {
       return next(new ErrorHandler(`no order found with that id: ${id}`));
     }
