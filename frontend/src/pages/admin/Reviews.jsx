@@ -1,3 +1,4 @@
+import ReviewsTable from "@/components/admin/ReviewsTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -52,6 +53,7 @@ const Reviews = () => {
           {isLoading ? "Fetching..." : "Fetch Reviews"}
         </Button>
       </form>
+      {data?.reviews?.length > 0 && <ReviewsTable reviews={data?.reviews} />}
     </div>
   );
 };
