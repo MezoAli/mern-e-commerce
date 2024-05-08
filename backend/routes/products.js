@@ -36,7 +36,7 @@ router.patch(
 router.delete("/admin/products/:id", isAuthenticated, isAdmin, deleteProduct);
 
 router.put("/products/reviews", isAuthenticated, createReview);
-router.get("/products/reviews/:productId", getAllReviewsForProduct);
+router.get("/admin/products/reviews/:productId", getAllReviewsForProduct);
 router.delete("/products/reviews", isAdmin, deleteReview);
 
 export default router;

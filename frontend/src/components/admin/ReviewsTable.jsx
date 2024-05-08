@@ -12,24 +12,33 @@ import {
 import { Trash2Icon } from "lucide-react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { useDeleteOrderMutation } from "@/store/api/orderApi";
 import StarRatings from "react-star-ratings";
-const ReviewsTable = ({ reviews }) => {
-  //   const [deleteOrder, { isLoading, isSuccess, error, isError, data }] =
-  //     useDeleteOrderMutation();
+import { useDeleteReviewMutation } from "@/store/api/productsApi";
+const ReviewsTable = ({ reviews, productId }) => {
+  const [deleteReview, { isLoading, isSuccess, error, isError, data }] =
+    useDeleteReviewMutation();
+  console.log(productId);
 
-  //   useEffect(() => {
-  //     if (isError) {
-  //       toast.error(error?.data?.message);
-  //     }
-  //     if (isSuccess) {
-  //       toast.success(data?.message);
-  //     }
-  //   }, [isSuccess, isError]);
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success(data?.message);
+    }
+  }, [isSuccess, isError]);
 
-  //   if (isLoading) {
-  //     return <p className="text-center text-2xl font-bold my-8">Loading...</p>;
-  //   }
+  if (isLoading) {
+    return <p className="text-center text-2xl font-bold my-8">Loading...</p>;
+  }
+
+  const handleDeleteReview = async (reviewId) => {
+    const params = {
+      productId,
+      reviewId,
+    };
+    deleteReview(params);
+  };
 
   return (
     <div className="flex flex-col w-full gap-4">
@@ -66,10 +75,10 @@ const ReviewsTable = ({ reviews }) => {
                 <Button
                   variant="outline"
                   className="text-red-500"
-                  //   disabled={isLoading}
-                  //   onClick={() => {
-                  //     deleteOrder(item?._id);
-                  //   }}
+                  disabled={isLoading}
+                  onClick={() => {
+                    handleDeleteReview(item?._id);
+                  }}
                 >
                   <Trash2Icon />
                 </Button>

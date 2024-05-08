@@ -172,7 +172,7 @@ export const deleteReview = catchAsyncErrors(async (req, res, next) => {
 
   await product.save({ validateBeforeSave: false });
 
-  res.status(201).json({ msg: "review deleted Successfully" });
+  res.status(201).json({ message: "review deleted Successfully" });
 });
 
 export const getAllProductsForAdmin = catchAsyncErrors(

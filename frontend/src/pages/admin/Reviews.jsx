@@ -53,7 +53,13 @@ const Reviews = () => {
           {isLoading ? "Fetching..." : "Fetch Reviews"}
         </Button>
       </form>
-      {data?.reviews?.length > 0 && <ReviewsTable reviews={data?.reviews} />}
+      {data?.reviews?.length > 0 ? (
+        <ReviewsTable reviews={data?.reviews} productId={productId} />
+      ) : (
+        <p className="text-xl font-semibold capitalize text-center">
+          There is no reviews for that product
+        </p>
+      )}
     </div>
   );
 };
