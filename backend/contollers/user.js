@@ -215,8 +215,8 @@ export const deleteUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findByIdAndDelete(req.params.id);
 
   res
-    .status(200)
-    .json({ msg: `user with email : ${user.email} deleted successfully` });
+    .status(201)
+    .json({ message: `user with email : ${user.email} deleted successfully` });
 });
 
 export const uploadFileController = catchAsyncErrors(async (req, res, next) => {

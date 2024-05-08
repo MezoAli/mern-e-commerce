@@ -4,7 +4,7 @@ import { setIsAuthenticated, setLoading, setUser } from "../slices/userSlice";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api/v1/auth" }),
-  tagTypes: ["User"],
+  tagTypes: ["User", "AdminUsers"],
   endpoints: (builder) => ({
     getUserProfile: builder.query({
       query: () => "/me",
@@ -64,6 +64,14 @@ export const userApi = createApi({
       query: () => ({
         url: "/admin/users",
       }),
+      providesTags: ["AdminUsers"],
+    }),
+    deleteUser: builder.mutation({
+      query: (userId) => ({
+        url: `/admin/users/${userId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["AdminUsers"],
     }),
   }),
 });
@@ -76,4 +84,5 @@ export const {
   useForgetPasswordMutation,
   useResetPasswordMutation,
   useGetAllUsersQuery,
+  useDeleteUserMutation,
 } = userApi;

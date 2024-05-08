@@ -12,23 +12,26 @@ import {
 import { Edit2Icon, Trash2Icon } from "lucide-react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useDeleteUserMutation } from "@/store/api/userApi";
 
 const UsersTable = ({ users }) => {
-  //   const [deleteOrder, { isLoading, isSuccess, error, isError, data }] =
-  //     useDeleteOrderMutation();
+  const [deleteUser, { isLoading, isSuccess, error, isError, data }] =
+    useDeleteUserMutation();
 
-  //   useEffect(() => {
-  //     if (isError) {
-  //       toast.error(error?.data?.message);
-  //     }
-  //     if (isSuccess) {
-  //       toast.success(data?.message);
-  //     }
-  //   }, [isSuccess, isError]);
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success(data?.message, {
+        duration: 4000,
+      });
+    }
+  }, [isSuccess, isError]);
 
-  //   if (isLoading) {
-  //     return <p className="text-center text-2xl font-bold my-8">Loading...</p>;
-  //   }
+  if (isLoading) {
+    return <p className="text-center text-2xl font-bold my-8">Loading...</p>;
+  }
 
   return (
     <>
@@ -62,10 +65,10 @@ const UsersTable = ({ users }) => {
                 <Button
                   variant="outline"
                   className="text-red-500"
-                  //   disabled={isLoading}
-                  //   onClick={() => {
-                  //     deleteOrder(item?._id);
-                  //   }}
+                  disabled={isLoading}
+                  onClick={() => {
+                    deleteUser(item?._id);
+                  }}
                 >
                   <Trash2Icon />
                 </Button>
