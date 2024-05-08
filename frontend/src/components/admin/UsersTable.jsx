@@ -42,6 +42,7 @@ const UsersTable = ({ users }) => {
             <TableHead className="w-[130px]">User Id</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
             <TableHead>Joined At</TableHead>
             <TableHead className="text-center">Actions</TableHead>
           </TableRow>
@@ -53,12 +54,13 @@ const UsersTable = ({ users }) => {
               <TableCell>{item?.name}</TableCell>
 
               <TableCell>{item?.email}</TableCell>
+              <TableCell>{item?.role}</TableCell>
               <TableCell>
                 {new Date(item?.createdAt).toLocaleDateString()}
               </TableCell>
               <TableCell className="font-bold flex justify-center items-center gap-2">
                 <Button variant="outline" className="text-green-500">
-                  <Link to={`/admin/dashboard/orders/${item?._id}`}>
+                  <Link to={`/admin/dashboard/users/${item?._id}`}>
                     <Edit2Icon />
                   </Link>
                 </Button>

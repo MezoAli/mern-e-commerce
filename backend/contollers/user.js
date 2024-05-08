@@ -202,6 +202,18 @@ export const getAllUsers = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({ users });
 });
 
+export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req?.params?.id);
+
+  if (!user) {
+    return next(
+      new ErrorHandler(`no user found with that id : ${req.params.id}`, 404)
+    );
+  }
+
+  res.status(200).json({ user });
+});
+
 export const updateUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,

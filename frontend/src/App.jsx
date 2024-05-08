@@ -31,6 +31,7 @@ import Users from "./pages/admin/Users";
 import EditProduct from "./pages/admin/EditProduct";
 import UploadProductImages from "./pages/admin/UploadProductImages";
 import EditOrder from "./pages/admin/EditOrder";
+import EditUser from "./pages/admin/EditUser";
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,7 @@ const router = createBrowserRouter([
           { path: "/admin/dashboard/orders/:orderId", element: <EditOrder /> },
           { path: "/admin/dashboard/reviews", element: <Reviews /> },
           { path: "/admin/dashboard/users", element: <Users /> },
+          { path: "/admin/dashboard/users/:userId", element: <EditUser /> },
         ],
       },
       ,

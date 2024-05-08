@@ -12,6 +12,7 @@ import {
   updateUser,
   deleteUser,
   uploadFileController,
+  getUserDetails,
 } from "../contollers/user.js";
 import { isAuthenticated } from "../middlewares/isAuthenticated.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
@@ -31,6 +32,7 @@ router.put("/me", isAuthenticated, updateProfile);
 router.put("/me/upload_avatar", isAuthenticated, uploadFileController);
 
 router.get("/admin/users", isAdmin, getAllUsers);
+router.get("/admin/users/:id", isAdmin, getUserDetails);
 router.put("/admin/users/:id", isAdmin, updateUser);
 router.delete("/admin/users/:id", isAdmin, deleteUser);
 
