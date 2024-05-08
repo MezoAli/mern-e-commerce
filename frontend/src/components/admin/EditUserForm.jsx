@@ -1,16 +1,36 @@
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUpdateUserMutation } from "@/store/api/userApi";
+import toast from "react-hot-toast";
 
 const EditUserForm = ({ user }) => {
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
   const [role, setRole] = useState(user?.role);
+
+  const [updateUser, { data, isLoading, isSuccess, isError, error }] =
+    useUpdateUserMutation();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const body = {
+      name,
+      email,
+      role,
+    };
+    updateUser({ body, userId: user?._id });
   };
-  console.log(user);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success(data?.message);
+    }
+  }, [isError, isSuccess]);
   return (
     <form
       className="flex flex-col gap-10 shadow-lg p-5"
@@ -56,14 +76,14 @@ const EditUserForm = ({ user }) => {
         </select>
       </div>
 
-      {/* <Button
+      <Button
         className="w-[50%] mx-auto"
         variant="auth"
         type="submit"
         disabled={isLoading}
       >
-        {isLoading ? "Creating..." : "Register"}
-      </Button> */}
+        {isLoading ? "Updating..." : "Update"}
+      </Button>
     </form>
   );
 };

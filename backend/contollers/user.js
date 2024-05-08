@@ -220,7 +220,13 @@ export const updateUser = catchAsyncErrors(async (req, res, next) => {
     runValidators: false,
   });
 
-  res.status(201).json({ user });
+  if (!user) {
+    return next(
+      new ErrorHandler(`no user found with that id : ${req.params.id}`, 404)
+    );
+  }
+
+  res.status(201).json({ user, message: "User Updated Successfully" });
 });
 
 export const deleteUser = catchAsyncErrors(async (req, res, next) => {
