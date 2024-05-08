@@ -199,7 +199,7 @@ export const getAllUsers = catchAsyncErrors(async (req, res, next) => {
     searchOptions._id = id;
   }
   const users = await User.find(searchOptions);
-  res.status(200).json({ noOfUsers: users.length, users });
+  res.status(200).json({ users });
 });
 
 export const updateUser = catchAsyncErrors(async (req, res, next) => {
