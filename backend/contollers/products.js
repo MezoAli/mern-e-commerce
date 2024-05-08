@@ -144,11 +144,9 @@ export const getAllReviewsForProduct = catchAsyncErrors(
       "name email"
     );
     if (!product) {
-      return next(new ErrorHandler("Product not found", 404));
+      return next(new ErrorHandler("there is no Product for that Id", 404));
     }
-    res
-      .status(200)
-      .json({ noOfReviews: product.reviews.length, reviews: product.reviews });
+    res.status(200).json({ reviews: product.reviews });
   }
 );
 
