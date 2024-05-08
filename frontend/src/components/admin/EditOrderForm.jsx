@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUpdateOrderMutation } from "@/store/api/orderApi";
+import toast from "react-hot-toast";
 
 const EditOrderForm = ({ order }) => {
   const isPaid = order?.paymentInfo?.status === "paid" ? true : false;
@@ -9,10 +11,27 @@ const EditOrderForm = ({ order }) => {
     order?.paymentInfo?.status
   );
 
+  const [updateOrder, { data, isLoading, isSuccess, isError, error }] =
+    useUpdateOrderMutation();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(orderStatus, paymentStatus);
+    const body = {
+      orderStatus,
+      paymentStatus,
+    };
+    updateOrder({ body, orderId: order?._id });
   };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success(data?.message);
+    }
+  }, [isError, isSuccess]);
+
   return (
     <form
       className="flex flex-col gap-4 justify-start items-center"
@@ -147,8 +166,13 @@ const EditOrderForm = ({ order }) => {
           })}
         </div>
       </div>
-      <Button variant="auth" type="submit" className="w-[50%] my-4">
-        Update
+      <Button
+        variant="auth"
+        type="submit"
+        className="w-[50%] my-4"
+        disabled={isLoading}
+      >
+        {isLoading ? "Updating..." : "Update"}
       </Button>
     </form>
   );

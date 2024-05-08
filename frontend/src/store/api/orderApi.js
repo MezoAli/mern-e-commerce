@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api/v1" }),
-  tagTypes: ["AdminOrders"],
+  tagTypes: ["AdminOrders", "SingleOrder"],
   endpoints: (builder) => ({
     createOrder: builder.mutation({
       query: (body) => ({
@@ -48,6 +48,7 @@ export const orderApi = createApi({
       query: (orderId) => ({
         url: `/admin/orders/${orderId}`,
       }),
+      providesTags: ["SingleOrder"],
     }),
     deleteOrder: builder.mutation({
       query: (orderId) => ({
@@ -62,7 +63,7 @@ export const orderApi = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["AdminOrders"],
+      invalidatesTags: ["AdminOrders", "SingleOrder"],
     }),
   }),
 });

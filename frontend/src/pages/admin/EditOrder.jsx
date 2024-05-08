@@ -4,10 +4,18 @@ import { useParams } from "react-router-dom";
 
 const EditOrder = () => {
   const { orderId } = useParams();
-  const { data, isLoading } = useGetOrderDetailsForAdminQuery(orderId);
+  const { data, isLoading, error } = useGetOrderDetailsForAdminQuery(orderId);
 
   if (isLoading) {
     return <p className="text-center text-2xl font-bold my-8">Loading...</p>;
+  }
+
+  if (!data?.order) {
+    return (
+      <p className="text-center text-red-500 font-bold text-3xl">
+        {error?.data?.message}
+      </p>
+    );
   }
 
   return (

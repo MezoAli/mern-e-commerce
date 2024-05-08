@@ -81,10 +81,11 @@ export const updateOrder = catchAsyncErrors(async (req, res, next) => {
   }
 
   order.orderStatus = req.body.orderStatus;
+  order.paymentInfo.status = req.body.paymentStatus;
 
   await order.save({ validateBeforeSave: false });
 
-  res.status(201).json({ msg: "order status updated successfully" });
+  res.status(201).json({ message: "order status updated successfully" });
 });
 
 export const deleteOrder = catchAsyncErrors(async (req, res, next) => {
