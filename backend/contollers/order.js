@@ -2,8 +2,6 @@ import Order from "../models/order.js";
 import Product from "../models/product.js";
 import ErrorHandler from "../utils/errorHnadler.js";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
-import { getDatesBetween } from "../utils/getDatesBetween.js";
-import { getSales } from "../utils/getSales.js";
 
 export const createOrder = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user._id;

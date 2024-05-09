@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { productsApi } from "./productsApi";
 
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api/v1" }),
-  tagTypes: ["AdminOrders", "SingleOrder"],
+  tagTypes: ["AdminOrders", "SingleOrder", "UserOrders"],
   endpoints: (builder) => ({
     createOrder: builder.mutation({
       query: (body) => ({
@@ -11,6 +12,18 @@ export const orderApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["UserOrders"],
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        await queryFulfilled;
+        console.log(args);
+        args?.orderItems?.forEach((item) => {
+          dispatch(
+            productsApi.endpoints.getSingleProductDetails.initiate(
+              item?.product
+            )
+          );
+        });
+      },
     }),
     createStripeOrder: builder.mutation({
       query: (body) => ({
@@ -23,6 +36,7 @@ export const orderApi = createApi({
       query: () => ({
         url: "/orders",
       }),
+      providesTags: ["UserOrders"],
     }),
     getSingleOrder: builder.query({
       query: (id) => ({

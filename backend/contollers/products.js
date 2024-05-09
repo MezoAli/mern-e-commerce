@@ -177,7 +177,9 @@ export const deleteReview = catchAsyncErrors(async (req, res, next) => {
 
 export const getAllProductsForAdmin = catchAsyncErrors(
   async (req, res, next) => {
-    const products = await Product.find();
+    const products = await Product.find().sort({
+      createdAt: -1,
+    });
 
     res.status(200).json({ products });
   }
