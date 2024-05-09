@@ -15,7 +15,7 @@ export const orderApi = createApi({
       invalidatesTags: ["UserOrders"],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         await queryFulfilled;
-        console.log(args);
+        dispatch(productsApi.endpoints.getAllProductForAdmin.initiate(null));
         args?.orderItems?.forEach((item) => {
           dispatch(
             productsApi.endpoints.getSingleProductDetails.initiate(

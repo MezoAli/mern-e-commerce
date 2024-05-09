@@ -2,6 +2,7 @@ import Order from "../models/order.js";
 import Product from "../models/product.js";
 import ErrorHandler from "../utils/errorHnadler.js";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
+import { getSales } from "../utils/getSales.js";
 
 export const createOrder = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user._id;
@@ -9,6 +10,7 @@ export const createOrder = catchAsyncErrors(async (req, res, next) => {
 
   order.orderItems.forEach(async (item) => {
     const product = await Product.findById(item.product.toString());
+    console.log(product);
     if (!product) {
       return next(
         new ErrorHandler(`no product found with that id: ${id}`, 404)

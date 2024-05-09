@@ -30,7 +30,7 @@ const RegisterForm = () => {
     }
     if (isSuccess) {
       toast.success(data?.message);
-      navigate("/");
+      navigate("/login");
     }
   }, [isError, isSuccess, isAuthenticated]);
   return (
