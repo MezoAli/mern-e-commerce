@@ -15,14 +15,17 @@ export const orderApi = createApi({
       invalidatesTags: ["UserOrders"],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         await queryFulfilled;
-        dispatch(productsApi.endpoints.getAllProductForAdmin.initiate(null));
-        args?.orderItems?.forEach((item) => {
+        await dispatch(
+          productsApi.endpoints.getAllProductForAdmin.initiate(null)
+        );
+        console.log(args);
+        for (let i = 0; i < args?.orderItems?.length; i++) {
           dispatch(
             productsApi.endpoints.getSingleProductDetails.initiate(
-              item?.product
+              args?.orderItems[i]?.product
             )
           );
-        });
+        }
       },
     }),
     createStripeOrder: builder.mutation({

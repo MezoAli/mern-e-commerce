@@ -6,7 +6,7 @@ import {
   useGetSingleProductDetailsQuery,
   useUploadProductImagesMutation,
 } from "@/store/api/productsApi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { Trash2Icon } from "lucide-react";
@@ -14,6 +14,7 @@ import { Trash2Icon } from "lucide-react";
 const UploadProductImages = () => {
   const { productId } = useParams();
   const [images, setImages] = useState([]);
+  const inputRef = useRef();
   const [previewImages, setPreviewImages] = useState([]);
   const { data: productData } = useGetSingleProductDetailsQuery(productId);
 
@@ -82,6 +83,17 @@ const UploadProductImages = () => {
     }
   }, [deleteImageIsError, deleteImageIsSuccess]);
 
+  const handleDeleteImagesPreview = (image) => {
+    setPreviewImages((prev) => {
+      const newState = prev.filter((img) => img !== image);
+      return newState;
+    });
+    setImages((prev) => {
+      const newState = prev.filter((img) => img !== image);
+      return newState;
+    });
+  };
+
   return (
     <div>
       <h2 className="text-center text-2xl font-bold mb-10">Upload Images</h2>
@@ -137,14 +149,7 @@ const UploadProductImages = () => {
                       variant="destructive"
                       size="sm"
                       onClick={() => {
-                        setPreviewImages((prev) => {
-                          const newState = prev.filter((img) => img !== image);
-                          return newState;
-                        });
-                        setImages((prev) => {
-                          const newState = prev.filter((img) => img !== image);
-                          return newState;
-                        });
+                        handleDeleteImagesPreview(image);
                       }}
                     >
                       <Trash2Icon />
@@ -164,7 +169,16 @@ const UploadProductImages = () => {
         <Label htmlFor="picture" className="text-semibold text-lg">
           Images
         </Label>
-        <Input id="picture" type="file" multiple onChange={handleImage} />
+        <Input
+          id="picture"
+          type="file"
+          multiple
+          onChange={handleImage}
+          ref={inputRef}
+          onClick={() => {
+            if (inputRef.current) inputRef.current.value = "";
+          }}
+        />
         <Button type="submit" variant="auth" disabled={isLoading}>
           {isLoading ? "uploading..." : "Upload"}
         </Button>
