@@ -232,6 +232,10 @@ export const updateUser = catchAsyncErrors(async (req, res, next) => {
 export const deleteUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findByIdAndDelete(req.params.id);
 
+  if (user?.avatar?.url) {
+    await deleteImage(user?.avatar?.public_id);
+  }
+
   res
     .status(201)
     .json({ message: `user with email : ${user.email} deleted successfully` });
