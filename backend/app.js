@@ -7,6 +7,7 @@ import paymentRouter from "./routes/stripe_checkout.js";
 import { connectDB } from "./config/connectDB.js";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middlewares/error.js";
+import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -33,6 +34,8 @@ app.use(
   })
 );
 app.use(cookieParser());
+
+app.use(cors());
 
 app.use("/api/v1", productRouter);
 app.use("/api/v1", paymentRouter);
