@@ -12,7 +12,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": "https://mern-e-commerce-jton.onrender.com",
+      "/api": {
+        target: "https://mern-e-commerce-jton.onrender.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
     },
   },
 });
