@@ -4,9 +4,18 @@ import { useParams } from "react-router-dom";
 
 const EditProduct = () => {
   const { productId } = useParams();
-  const { data, isLoading } = useGetSingleProductDetailsQuery(productId);
+  const { data, isLoading, isError, error } =
+    useGetSingleProductDetailsQuery(productId);
   if (isLoading) {
     return <p className="text-center text-2xl font-bold my-8">Loading...</p>;
+  }
+
+  if (isError) {
+    return (
+      <p className="text-center text-red-500 font-bold text-3xl">
+        {error?.data?.message}
+      </p>
+    );
   }
   return (
     <div className="w-full flex flex-col gap-4">

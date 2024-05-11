@@ -7,6 +7,8 @@ import Metadata from "@/components/layout/Metadata";
 import { Button } from "@/components/ui/button";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import NotFound from "@/components/layout/NotFound";
+import Loading from "@/components/layout/Loading";
 
 const Invoice = () => {
   const { orderId } = useParams();
@@ -31,9 +33,11 @@ const Invoice = () => {
   };
 
   if (isLoading) {
-    return (
-      <p className="text-3xl font-semibold my-8 text-center">Loading...</p>
-    );
+    return <Loading />;
+  }
+
+  if (isError && error?.status === 404) {
+    return <NotFound />;
   }
 
   return (

@@ -7,6 +7,11 @@ import paymentRouter from "./routes/stripe_checkout.js";
 import { connectDB } from "./config/connectDB.js";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middlewares/error.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __direname = path.dirname(__filename);
 const app = express();
 
 process.on("uncaughtException", (err) => {
@@ -31,6 +36,14 @@ app.use("/api/v1", productRouter);
 app.use("/api/v1", paymentRouter);
 app.use("/api/v1/auth", userRouter);
 app.use("/api/v1", orderRouter);
+
+if (process.env.NODE_ENV === "PRODUCTION") {
+  app.use(express.static(path.join(__direname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__direname, "../frontend/dist/index.html"));
+  });
+}
 
 app.use(errorMiddleware);
 let server;

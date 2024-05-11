@@ -18,7 +18,6 @@ export const orderApi = createApi({
         await dispatch(
           productsApi.endpoints.getAllProductForAdmin.initiate(null)
         );
-        console.log(args);
         for (let i = 0; i < args?.orderItems?.length; i++) {
           dispatch(
             productsApi.endpoints.getSingleProductDetails.initiate(

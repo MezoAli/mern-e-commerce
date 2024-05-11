@@ -32,13 +32,17 @@ const AdminOrders = () => {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      {data?.orders?.length > 0 && (
+      {data?.orders?.length > 0 ? (
         <div className="max-w-5xl mx-auto">
           <h3 className="text-2xl font-bold mb-6 capitalize">
             {filteredOrders.length} Orders
           </h3>
           <OrdersTable orders={filteredOrders} />
         </div>
+      ) : (
+        <p className="text-xl font-semibold text-center my-8 capitalize">
+          There is no orders
+        </p>
       )}
     </>
   );

@@ -32,11 +32,13 @@ import EditProduct from "./pages/admin/EditProduct";
 import UploadProductImages from "./pages/admin/UploadProductImages";
 import EditOrder from "./pages/admin/EditOrder";
 import EditUser from "./pages/admin/EditUser";
+import NotFound from "./components/layout/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <NotFound />,
     children: [
       { path: "/", element: <Home /> },
       {
