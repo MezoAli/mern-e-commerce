@@ -3,7 +3,9 @@ import { productsApi } from "./productsApi";
 
 export const orderApi = createApi({
   reducerPath: "orderApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/v1" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `https://mern-e-commerce-jton.onrender.com/api/v1`,
+  }),
   tagTypes: ["AdminOrders", "SingleOrder", "UserOrders"],
   endpoints: (builder) => ({
     createOrder: builder.mutation({
