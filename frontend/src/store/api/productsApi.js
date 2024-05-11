@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://mern-e-commerce-jton.onrender.com/api/v1`,
+    baseUrl: `/api/v1`,
   }),
   tagTypes: ["Product", "AllProducts", "ProductReviews"],
   endpoints: (builder) => ({

@@ -4,7 +4,7 @@ import { setIsAuthenticated, setLoading, setUser } from "../slices/userSlice";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `https://mern-e-commerce-jton.onrender.com/api/v1/auth`,
+    baseUrl: `/api/v1/auth`,
   }),
   tagTypes: ["User", "AdminUsers"],
   endpoints: (builder) => ({
