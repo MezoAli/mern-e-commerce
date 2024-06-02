@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node backend/app.js",
+    "build": "npm install --prefix ./frontend && npm run build --prefix ./frontend && npm install",
     "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/app.js",
     "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/app.js",
     "seed": "node backend/seeder/seed.js"

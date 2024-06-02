@@ -23,6 +23,7 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "lucide-react": "^0.371.0",
+    "mern-e-commerce": "file:..",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^6.9.0",
